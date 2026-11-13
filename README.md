@@ -34,3 +34,10 @@ Microsoft, Windows and Other demonstrated Products in this project are trademark
 ![App Screenshot](https://raw.githubusercontent.com/DHXNXNJXY-DEV/WindowsWASM/refs/heads/main/Screenshots/Screenshot_20261113-071516_windowsWASM.png)
 ![App Screenshot](https://raw.githubusercontent.com/DHXNXNJXY-DEV/WindowsWASM/refs/heads/main/Screenshots/Screenshot_20261113-223154_windowsWASM.png)
 ![App Screenshot](https://raw.githubusercontent.com/DHXNXNJXY-DEV/WindowsWASM/refs/heads/main/Screenshots/Screenshot_20261113-223616_windowsWASM.png)
+
+## To Use
+
+PC Users:https://dhxnxnjxy-dev.github.io/WindowsWASM/
+
+Android Users: See Releases https://github.com/DHXNXNJXY-DEV/WindowsWASM/releases/tag/v.1
+
