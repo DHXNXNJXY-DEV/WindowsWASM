@@ -4224,12 +4224,347 @@
       caret-color: currentColor;
     }
 
+    
+    /* Virtual Desktop Visibility & Windows 10 Task View */
+    .vd-hidden {
+      display: none !important;
+    }
+
+    .vd-taskbar-hidden {
+      display: none !important;
+    }
+
+    .win10-taskview-btn {
+      width: 44px;
+      height: 40px;
+      background: transparent;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #ffffff;
+      transition: background 0.12s ease;
+      outline: none;
+      padding: 0;
+    }
+
+    .win10-taskview-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .win10-taskview-btn.active {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .win10-taskview-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 40px;
+      background: rgba(20, 24, 38, 0.82);
+      backdrop-filter: blur(22px) saturate(130%);
+      -webkit-backdrop-filter: blur(22px) saturate(130%);
+      z-index: 9990;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      color: #ffffff;
+      user-select: none;
+      animation: tvFadeIn 0.14s ease-out;
+    }
+
+    .win10-taskview-overlay.active {
+      display: flex;
+    }
+
+    @keyframes tvFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .tv-windows-stage {
+      flex: 1;
+      overflow-y: auto;
+      padding: 36px 48px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: center;
+      justify-content: center;
+      gap: 24px 28px;
+    }
+
+    .tv-empty-desktop-msg {
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 16px;
+      font-weight: 300;
+      letter-spacing: 0.3px;
+    }
+
+    .tv-win-card {
+      width: 310px;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.12s ease;
+    }
+
+    .tv-win-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .tv-win-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 26px;
+      padding: 0 2px 6px;
+      gap: 8px;
+    }
+
+    .tv-win-card-id {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .tv-win-card-icon {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .tv-win-card-title {
+      font-size: 12.5px;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .tv-win-card-close {
+      width: 22px;
+      height: 22px;
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.12s, background 0.12s;
+    }
+
+    .tv-win-card:hover .tv-win-card-close {
+      opacity: 1;
+    }
+
+    .tv-win-card-close:hover {
+      background: #e81123;
+    }
+
+    .tv-win-preview {
+      height: 185px;
+      background: #141824;
+      border: 2px solid transparent;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: border-color 0.12s;
+    }
+
+    .tv-win-card:hover .tv-win-preview {
+      border-color: #ffffff;
+    }
+
+    .tv-win-preview-bar {
+      height: 22px;
+      background: #232838;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8px;
+      font-size: 10px;
+      color: #cbd5e1;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      flex-shrink: 0;
+    }
+
+    .tv-win-preview-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.22));
+    }
+
+    .tv-win-preview-body img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+    }
+
+    .tv-win-preview-label {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.78);
+      text-align: center;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .tv-desktops-bar {
+      height: 132px;
+      background: rgba(10, 12, 20, 0.76);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .tv-desktops-list {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      overflow-x: auto;
+      padding: 6px 12px;
+    }
+
+    .tv-desktop-card {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+      cursor: pointer;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .tv-desktop-card-top {
+      width: 156px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .tv-desktop-card.active .tv-desktop-card-top {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .tv-desktop-close {
+      width: 18px;
+      height: 18px;
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.1s, background 0.1s;
+    }
+
+    .tv-desktop-card:hover .tv-desktop-close,
+    .tv-desktop-card.active .tv-desktop-close {
+      opacity: 0.9;
+    }
+
+    .tv-desktop-close:hover {
+      background: #e81123;
+      opacity: 1;
+    }
+
+    .tv-desktop-thumb {
+      width: 156px;
+      height: 88px;
+      background-size: cover;
+      background-position: center;
+      border: 2px solid rgba(255, 255, 255, 0.22);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.12s, transform 0.12s;
+    }
+
+    .tv-desktop-card:hover .tv-desktop-thumb {
+      border-color: rgba(255, 255, 255, 0.75);
+    }
+
+    .tv-desktop-card.active .tv-desktop-thumb {
+      border-color: #ffffff;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4);
+    }
+
+    .tv-desktop-card.drag-over .tv-desktop-thumb {
+      border-color: #00d2ff;
+      transform: scale(1.04);
+    }
+
+    .tv-mini-win {
+      position: absolute;
+      background: rgba(25, 30, 44, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);
+    }
+
+    .tv-new-desktop-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+      padding: 10px 14px;
+      flex-shrink: 0;
+      transition: background 0.12s;
+    }
+
+    .tv-new-desktop-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .tv-new-desktop-plus {
+      font-size: 26px;
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    .tv-new-desktop-label {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
     </style>
 </head>
 <body>
 
   <!-- HOST CANVAS: 1366x768 -->
-  <div class="viewport-canvas-host" id="viewportCanvasHost" style="background-image: url('https://wallpapercave.com/wp/wp5493583.jpg'); background-size: cover; background-position: center;">
+  <div class="viewport-canvas-host" id="viewportCanvasHost" style="background-image: url('https://server.wallpaperalchemy.com/storage/wallpapers/2266/windows-10-hero-blue-light-wallpaper.jpg'); background-size: cover; background-position: center;">
 
     <!-- 0. BOOT SCREEN -->
     <div class="win10-boot-screen" id="win10BootScreen">
@@ -4855,7 +5190,7 @@
             <h2 style="font-size: 24px; font-weight: 300; color: #000; margin-bottom: 18px;">Background</h2>
 
             <!-- Realistic Desktop/Window Monitor Preview with Desktop Wallpaper -->
-            <div id="settingsWallpaperMonitorPreview" style="width: 380px; max-width: 100%; height: 214px; background: #000 url('https://wallpapercave.com/wp/wp5493583.jpg') center center / cover no-repeat; border: 1px solid #777; position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin-bottom: 24px;">
+            <div id="settingsWallpaperMonitorPreview" style="width: 380px; max-width: 100%; height: 214px; background: #000 url('https://server.wallpaperalchemy.com/storage/wallpapers/2266/windows-10-hero-blue-light-wallpaper.jpg') center center / cover no-repeat; border: 1px solid #777; position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin-bottom: 24px;">
               <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 14px; background: rgba(0,0,0,0.85); display: flex; align-items: center; padding-left: 4px;">
                 <div style="width: 8px; height: 8px; background: #0078d7;"></div>
               </div>
@@ -4879,7 +5214,7 @@
             <div style="font-size: 13px; font-weight: 600; color: #222; margin-bottom: 10px;">Choose your picture</div>
             <!-- Thumbnails Row -->
             <div id="settingsWallpaperThumbnailsRow" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px;">
-              <img src="https://wallpapercave.com/wp/wp5493583.jpg" onclick="setDesktopWallpaper(this.src)" style="width: 66px; height: 66px; object-fit: cover; cursor: pointer; border: 2px solid #0078d7;" title="Windows 10 Default Dark Hero">
+              <img src="https://server.wallpaperalchemy.com/storage/wallpapers/2266/windows-10-hero-blue-light-wallpaper.jpg" onclick="setDesktopWallpaper(this.src)" style="width: 66px; height: 66px; object-fit: cover; cursor: pointer; border: 2px solid #0078d7;" title="Windows 10 Default Dark Hero">
               <img src="https://us1.discourse-cdn.com/spiceworks/original/4X/9/1/5/91576352dafff29c9de814e011e0232743d4e651.jpeg" onclick="setDesktopWallpaper(this.src)" style="width: 66px; height: 66px; object-fit: cover; cursor: pointer; border: 2px solid transparent;" title="Windows 10 Blue Hero">
               <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80" onclick="setDesktopWallpaper(this.src)" style="width: 66px; height: 66px; object-fit: cover; cursor: pointer; border: 2px solid transparent;" title="Tropical Beach">
               <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80" onclick="setDesktopWallpaper(this.src)" style="width: 66px; height: 66px; object-fit: cover; cursor: pointer; border: 2px solid transparent;" title="Night Sky / Valley">
@@ -5582,6 +5917,19 @@
       </div>
     </div>
 
+    
+    <!-- WINDOWS 10 TASK VIEW / VIRTUAL DESKTOPS OVERLAY -->
+    <div class="win10-taskview-overlay" id="win10TaskViewOverlay" onclick="if(event.target===this) closeTaskView();">
+      <div class="tv-windows-stage" id="tvWindowsStage"></div>
+      <div class="tv-desktops-bar">
+        <div class="tv-desktops-list" id="tvDesktopsList"></div>
+        <button type="button" class="tv-new-desktop-btn" onclick="createVirtualDesktop(true)" title="New desktop">
+          <span class="tv-new-desktop-plus">+</span>
+          <span class="tv-new-desktop-label">New desktop</span>
+        </button>
+      </div>
+    </div>
+
     <!-- 5. WINDOWS 10 START MENU -->
     <div class="win10-start-menu" id="win10StartMenu">
       <div class="start-rail-left" id="startRailLeft">
@@ -5604,7 +5952,7 @@
 
           <button class="start-rail-btn" title="Settings" onclick="toggleStartMenu(); launchSettingsWindow();">
             <div class="start-rail-btn-icon">
-              <svg width="18" height="18" viewBox="0 0 32 32" fill="currentColor"><path d="M13.5 3L12.71875 6.8125C12.226563 6.988281 11.753906 7.191406 11.3125 7.4375L8.03125 5.28125L4.5 8.8125L6.65625 12.09375C6.410156 12.535156 6.207031 13.007813 6.03125 13.5L2.21875 14.28125L2.21875 19.28125L6.03125 20.0625C6.207031 20.554688 6.410156 21.027344 6.65625 21.46875L4.5 24.75L8.03125 28.28125L11.3125 26.125C11.753906 26.371094 12.226563 26.574219 12.71875 26.75L13.5 30.5625L18.5 30.5625L19.28125 26.75C19.773438 26.574219 20.246094 26.371094 20.6875 26.125L23.96875 28.28125L27.5 24.75L25.34375 21.46875C25.589844 21.027344 25.792969 20.554688 25.96875 20.0625L29.78125 19.28125L29.78125 14.28125L25.96875 13.5C25.792969 13.007813 25.589844 12.535156 25.34375 12.09375L27.5 8.8125L23.96875 5.28125L20.6875 7.4375C20.246094 7.191406 19.773438 6.988281 19.28125 6.8125L18.5 3 Z M 15.125 5L16.875 5L17.5625 8.375L18.125 8.53125C18.890625 8.742188 19.605469 9.054688 20.25 9.46875L20.75 9.78125L23.625 7.875L24.875 9.125L22.96875 12L23.28125 12.5C23.695313 13.144531 24.007813 13.859375 24.21875 14.625L24.375 15.1875L27.75 15.875L27.75 17.625L24.375 18.3125L24.21875 18.875C24.007813 19.640625 23.695313 20.355469 23.28125 21L22.96875 21.5L24.875 24.375L23.625 25.625L20.75 23.71875L20.25 24.03125C19.605469 24.445313 18.890625 24.757813 18.125 24.96875L17.5625 25.125L16.875 28.5L15.125 28.5L14.4375 25.125L13.875 24.96875C13.109375 24.757813 12.394531 24.445313 11.75 24.03125L11.25 23.71875L8.375 25.625L7.125 24.375L9.03125 21.5L8.71875 21C8.304688 20.355469 7.992188 19.640625 7.78125 18.875L7.625 18.3125L4.25 17.625L4.25 15.875L7.625 15.1875L7.78125 14.625C7.992188 13.859375 8.304688 13.144531 8.71875 12.5L9.03125 12L7.125 9.125L8.375 7.875L11.25 9.78125L11.75 9.46875C12.394531 9.054688 13.109375 8.742188 13.875 8.53125L14.4375 8.375 Z M 16 11.75C13.25 11.75 11 14 11 16.75C11 19.5 13.25 21.75 16 21.75C18.75 21.75 21 19.5 21 16.75C21 14 18.75 11.75 16 11.75 Z M 16 13.75C17.667969 13.75 19 15.082031 19 16.75C19 18.417969 17.667969 19.75 16 19.75C14.332031 19.75 13 18.417969 13 16.75C13 15.082031 14.332031 13.75 16 13.75Z"/></svg>
+              <svg width="22" height="22" viewBox="0 0 32 32" fill="currentColor"><path d="M13.5 3L12.71875 6.8125C12.226563 6.988281 11.753906 7.191406 11.3125 7.4375L8.03125 5.28125L4.5 8.8125L6.65625 12.09375C6.410156 12.535156 6.207031 13.007813 6.03125 13.5L2.21875 14.28125L2.21875 19.28125L6.03125 20.0625C6.207031 20.554688 6.410156 21.027344 6.65625 21.46875L4.5 24.75L8.03125 28.28125L11.3125 26.125C11.753906 26.371094 12.226563 26.574219 12.71875 26.75L13.5 30.5625L18.5 30.5625L19.28125 26.75C19.773438 26.574219 20.246094 26.371094 20.6875 26.125L23.96875 28.28125L27.5 24.75L25.34375 21.46875C25.589844 21.027344 25.792969 20.554688 25.96875 20.0625L29.78125 19.28125L29.78125 14.28125L25.96875 13.5C25.792969 13.007813 25.589844 12.535156 25.34375 12.09375L27.5 8.8125L23.96875 5.28125L20.6875 7.4375C20.246094 7.191406 19.773438 6.988281 19.28125 6.8125L18.5 3 Z M 15.125 5L16.875 5L17.5625 8.375L18.125 8.53125C18.890625 8.742188 19.605469 9.054688 20.25 9.46875L20.75 9.78125L23.625 7.875L24.875 9.125L22.96875 12L23.28125 12.5C23.695313 13.144531 24.007813 13.859375 24.21875 14.625L24.375 15.1875L27.75 15.875L27.75 17.625L24.375 18.3125L24.21875 18.875C24.007813 19.640625 23.695313 20.355469 23.28125 21L22.96875 21.5L24.875 24.375L23.625 25.625L20.75 23.71875L20.25 24.03125C19.605469 24.445313 18.890625 24.757813 18.125 24.96875L17.5625 25.125L16.875 28.5L15.125 28.5L14.4375 25.125L13.875 24.96875C13.109375 24.757813 12.394531 24.445313 11.75 24.03125L11.25 23.71875L8.375 25.625L7.125 24.375L9.03125 21.5L8.71875 21C8.304688 20.355469 7.992188 19.640625 7.78125 18.875L7.625 18.3125L4.25 17.625L4.25 15.875L7.625 15.1875L7.78125 14.625C7.992188 13.859375 8.304688 13.144531 8.71875 12.5L9.03125 12L7.125 9.125L8.375 7.875L11.25 9.78125L11.75 9.46875C12.394531 9.054688 13.109375 8.742188 13.875 8.53125L14.4375 8.375 Z M 16 11.75C13.25 11.75 11 14 11 16.75C11 19.5 13.25 21.75 16 21.75C18.75 21.75 21 19.5 21 16.75C21 14 18.75 11.75 16 11.75 Z M 16 13.75C17.667969 13.75 19 15.082031 19 16.75C19 18.417969 17.667969 19.75 16 19.75C14.332031 19.75 13 18.417969 13 16.75C13 15.082031 14.332031 13.75 16 13.75Z"/></svg>
             </div>
             <span class="start-rail-btn-label">Settings</span>
           </button>
@@ -5668,6 +6016,12 @@
         <button class="win10-search-btn" id="win10SearchBtn" onclick="toggleWin10SearchFlyout(event)" title="Search in Windows">
           <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor">
             <path d="M13 3C7.488281 3 3 7.488281 3 13C3 18.511719 7.488281 23 13 23C15.394531 23 17.59375 22.148438 19.3125 20.71875L27.28125 28.71875L28.71875 27.28125L20.71875 19.3125C22.148438 17.59375 23 15.394531 23 13C23 7.488281 18.511719 3 13 3 Z M 13 5C17.429688 5 21 8.570313 21 13C21 17.429688 17.429688 21 13 21C8.570313 21 5 17.429688 5 13C5 8.570313 8.570313 5 13 5Z"/>
+          </svg>
+        </button>
+
+                <button class="win10-taskview-btn" id="win10TaskViewBtn" onclick="toggleTaskView(event)" title="Task View">
+          <svg width="18" height="18" viewBox="0 0 32 32" fill="currentColor">
+            <path d="M9 5L9 27L23 27L23 5 Z M11 7L21 7L21 25L11 25 Z M3 9L3 23L7 23L7 21L5 21L5 11L7 11L7 9 Z M25 9L25 11L27 11L27 21L25 21L25 23L29 23L29 9 Z"/>
           </svg>
         </button>
 
@@ -5808,7 +6162,7 @@
     const OFFICE_URL = "https://office.ziziyi.com/";
     const OFFICE_ICON = "https://raw.githubusercontent.com/baotlake/office-website/main/public/logo.svg";
     const PDF_VIEWER_URL = "https://app.embedpdf.com/";
-    const PDF_VIEWER_ICON = "https://camo.githubusercontent.com/b7f0c2ba76d02fc3ac287d683de3aad85cc0d6d7335e08779ee73b736354efb8/68747470733a2f2f7777772e656d6265647064662e636f6d2f6c6f676f2d3139322e706e67";
+    const PDF_VIEWER_ICON = "https://upload.wikimedia.org/wikipedia/commons/6/60/Adobe_Acrobat_Reader_icon_%282020%29.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original";
     const WASMEDGE_URL = "https://browser.puter.com/";
     const WASMEDGE_ICON = "https://upload.wikimedia.org/wikipedia/commons/7/7e/Microsoft_Edge_logo_%282019%29.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original";
     const PHOTOSHOP_URL = "https://photosplice.com/web/";
@@ -5944,8 +6298,14 @@
 
     function bringToFront(el) {
       if (!el) return;
+      if (el.id && !windowDesktopMap.has(el.id)) {
+        windowDesktopMap.set(el.id, activeVirtualDesktopId);
+      }
       topZIndexCounter += 1;
       el.style.zIndex = topZIndexCounter;
+      if (typeof applyVirtualDesktopVisibility === "function") {
+        applyVirtualDesktopVisibility();
+      }
     }
 
     function getHostScale() {
@@ -6035,6 +6395,7 @@
       closeWinverWindow();
       closeFileExplorerWindow();
       closeCmdWindow();
+      if (typeof closeTaskView === 'function') closeTaskView();
       closeAllMultiInstances();
       closeChromeWindow();
       closeWindow();
@@ -6077,6 +6438,7 @@
       closeWinverWindow();
       closeFileExplorerWindow();
       closeCmdWindow();
+      if (typeof closeTaskView === 'function') closeTaskView();
       closeAllMultiInstances();
       closeChromeWindow();
       closeWindow();
@@ -7779,8 +8141,169 @@
       }
     }
 
-    function returnToGoogleHome() {
+    let chromeHistory = ["https://www.google.com"];
+    let chromeHistoryIndex = 0;
+
+    function buildChromeCorsBridgeScript(targetUrl) {
+      const baseHref = targetUrl.endsWith("/") ? targetUrl : targetUrl.replace(/\/[^\/]*$/, "/");
+      return `
+<base href="${baseHref}">
+<script>
+(function() {
+  var BASE_URL = "${targetUrl}";
+  try {
+    var OrigURL = window.URL;
+    window.URL = function(url, base) {
+      if (base !== undefined) {
+        var b = String(base);
+        if (!b || b === "null" || b.indexOf("about:") === 0) base = "${baseHref}";
+      }
+      return arguments.length >= 2 ? new OrigURL(url, base) : new OrigURL(url);
+    };
+    window.URL.prototype = OrigURL.prototype;
+    window.URL.createObjectURL = OrigURL.createObjectURL.bind(OrigURL);
+    window.URL.revokeObjectURL = OrigURL.revokeObjectURL.bind(OrigURL);
+  } catch (e) {}
+
+  try {
+    var mem = {};
+    var safeStore = {
+      getItem: function(k) { return Object.prototype.hasOwnProperty.call(mem, k) ? mem[k] : null; },
+      setItem: function(k, v) { mem[k] = String(v); },
+      removeItem: function(k) { delete mem[k]; },
+      clear: function() { mem = {}; },
+      key: function(i) { return Object.keys(mem)[i] || null; },
+      get length() { return Object.keys(mem).length; }
+    };
+    try { window.localStorage.getItem("_t"); } catch (e) { Object.defineProperty(window, "localStorage", { value: safeStore }); }
+    try { window.sessionStorage.getItem("_t"); } catch (e) { Object.defineProperty(window, "sessionStorage", { value: safeStore }); }
+  } catch (e) {}
+
+  document.addEventListener("click", function(e) {
+    var a = e.target && e.target.closest ? e.target.closest("a[href]") : null;
+    if (!a) return;
+    var rawHref = a.getAttribute("href");
+    if (!rawHref || rawHref.startsWith("#") || rawHref.startsWith("javascript:")) return;
+    e.preventDefault();
+    try {
+      var resolved = new URL(rawHref, BASE_URL).href;
+      window.parent.postMessage({ type: "CHROME_NAVIGATE", url: resolved }, "*");
+    } catch (err) {}
+  }, true);
+
+  document.addEventListener("submit", function(e) {
+    var form = e.target;
+    if (!form || !form.action) return;
+    var method = (form.method || "get").toLowerCase();
+    if (method === "get") {
+      e.preventDefault();
+      try {
+        var u = new URL(form.getAttribute("action") || BASE_URL, BASE_URL);
+        var fd = new FormData(form);
+        fd.forEach(function(val, key) { u.searchParams.set(key, String(val)); });
+        window.parent.postMessage({ type: "CHROME_NAVIGATE", url: u.href }, "*");
+      } catch (err) {}
+    }
+  }, true);
+})();
+<\/script>`;
+    }
+
+    const chromePageCache = new Map();
+
+    function applyChromeHtmlToIframe(iframe, targetUrl, rawHtml) {
+      const bridge = buildChromeCorsBridgeScript(targetUrl);
+      let injected = rawHtml
+        .replace(/<meta[^>]+http-equiv=["']?Content-Security-Policy["']?[^>]*>/gi, "")
+        .replace(/\s+crossorigin(?:="[^"]*"|='[^']*')?/gi, "")
+        .replace(/\s+integrity="[^"]*"/gi, "");
+
+      const titleMatch = injected.match(/<title[^>]*>([^<]+)<\/title>/i);
+      if (titleMatch && titleMatch[1]) {
+        const titleEl = document.getElementById("chromeActiveTabTitle");
+        if (titleEl) titleEl.textContent = titleMatch[1].trim();
+      }
+
+      if (/<head[^>]*>/i.test(injected)) {
+        injected = injected.replace(/<head[^>]*>/i, (m) => `${m}\n${bridge}`);
+      } else {
+        injected = `${bridge}\n${injected}`;
+      }
+      iframe.srcdoc = injected;
+    }
+
+    async function loadChromeCorsPage(iframe, targetUrl, loadToken) {
+      if (!iframe || !targetUrl) return;
+      iframe.removeAttribute("srcdoc");
+
+      if (chromePageCache.has(targetUrl)) {
+        if (iframe.dataset.chromeLoadToken === loadToken) {
+          applyChromeHtmlToIframe(iframe, targetUrl, chromePageCache.get(targetUrl));
+        }
+        return;
+      }
+
+      const controllers = [];
+      const raceProxy = (fn) => {
+        const ctrl = new AbortController();
+        controllers.push(ctrl);
+        const timer = setTimeout(() => ctrl.abort(), 3200);
+        return fn(targetUrl, ctrl.signal).then(txt => {
+          clearTimeout(timer);
+          if (!txt || txt.length < 40) throw new Error("Empty");
+          return txt;
+        }).catch(err => {
+          clearTimeout(timer);
+          throw err;
+        });
+      };
+
+      const fetchText = (makeUrl) => (u, sig) => fetch(makeUrl(u), { signal: sig }).then(r => {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.text();
+      });
+
+      const fetchAllOriginsJson = (u, sig) => fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(u)}`, { signal: sig })
+        .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+        .then(d => d && typeof d.contents === "string" ? d.contents : "");
+
+      try {
+        const fastestHtml = await Promise.any([
+          raceProxy(fetchText((u) => `https://corsproxy.io/?${encodeURIComponent(u)}`)),
+          raceProxy(fetchText((u) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`)),
+          raceProxy(fetchText((u) => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`)),
+          raceProxy(fetchAllOriginsJson)
+        ]);
+
+        controllers.forEach(c => { try { c.abort(); } catch (e) {} });
+        if (iframe.dataset.chromeLoadToken !== loadToken) return;
+
+        if (chromePageCache.size > 20) {
+          const firstKey = chromePageCache.keys().next().value;
+          chromePageCache.delete(firstKey);
+        }
+        chromePageCache.set(targetUrl, fastestHtml);
+        applyChromeHtmlToIframe(iframe, targetUrl, fastestHtml);
+        return;
+      } catch (err) {
+        controllers.forEach(c => { try { c.abort(); } catch (e) {} });
+      }
+
+      if (iframe.dataset.chromeLoadToken === loadToken) {
+        iframe.removeAttribute("srcdoc");
+        iframe.src = targetUrl;
+      }
+    }
+
+    function returnToGoogleHome(skipHistory = false) {
       chromeCurrentUrl = "https://www.google.com";
+      if (!skipHistory) {
+        chromeHistory = chromeHistory.slice(0, chromeHistoryIndex + 1);
+        if (chromeHistory[chromeHistoryIndex] !== chromeCurrentUrl) {
+          chromeHistory.push(chromeCurrentUrl);
+          chromeHistoryIndex = chromeHistory.length - 1;
+        }
+      }
       const omnibox = document.getElementById("chromeOmniboxInput");
       const titleEl = document.getElementById("chromeActiveTabTitle");
       const googleHome = document.getElementById("chromeGoogleHome");
@@ -7793,12 +8316,14 @@
 
       if (googleHome) googleHome.style.display = "flex";
       if (iframe) {
+        delete iframe.dataset.chromeLoadToken;
+        iframe.removeAttribute("srcdoc");
         iframe.style.display = "none";
         iframe.src = "about:blank";
       }
     }
 
-    function openChromeUrl(rawInput) {
+    function openChromeUrl(rawInput, skipHistory = false) {
       if (!rawInput || !rawInput.trim()) return;
       let target = rawInput.trim();
 
@@ -7812,7 +8337,18 @@
         target = "https://" + target;
       }
 
+      if ((target === "https://www.google.com" || target === "https://www.google.com/") && !target.includes("search")) {
+        returnToGoogleHome(skipHistory);
+        return;
+      }
+
       chromeCurrentUrl = target;
+      if (!skipHistory) {
+        chromeHistory = chromeHistory.slice(0, chromeHistoryIndex + 1);
+        chromeHistory.push(target);
+        chromeHistoryIndex = chromeHistory.length - 1;
+      }
+
       const omnibox = document.getElementById("chromeOmniboxInput");
       const titleEl = document.getElementById("chromeActiveTabTitle");
       const googleHome = document.getElementById("chromeGoogleHome");
@@ -7824,22 +8360,25 @@
 
       try {
         const parsed = new URL(target);
-        if (titleEl) titleEl.textContent = parsed.hostname;
+        if (titleEl) titleEl.textContent = `Loading ${parsed.hostname}...`;
       } catch (e) {
-        if (titleEl) titleEl.textContent = target;
-      }
-
-      if (target.includes("google.com") && !target.includes("search") && !target.includes("mail")) {
-        returnToGoogleHome();
-        return;
+        if (titleEl) titleEl.textContent = "Loading...";
       }
 
       if (googleHome) googleHome.style.display = "none";
       if (iframe) {
         iframe.style.display = "block";
-        iframe.src = target;
+        const loadToken = String(Date.now() + Math.random());
+        iframe.dataset.chromeLoadToken = loadToken;
+        loadChromeCorsPage(iframe, target, loadToken);
       }
     }
+
+    window.addEventListener("message", (ev) => {
+      if (ev.data && ev.data.type === "CHROME_NAVIGATE" && ev.data.url) {
+        openChromeUrl(ev.data.url);
+      }
+    });
 
     function executeGoogleSearch(term) {
       if (!term || !term.trim()) return;
@@ -7864,27 +8403,26 @@
     }
 
     function chromeNavBack() {
-      const iframe = document.getElementById("chromeWebIframe");
-      try {
-        if (iframe && iframe.contentWindow) iframe.contentWindow.history.back();
-      } catch (err) {
-        returnToGoogleHome();
+      if (chromeHistoryIndex > 0) {
+        chromeHistoryIndex -= 1;
+        openChromeUrl(chromeHistory[chromeHistoryIndex], true);
+      } else {
+        returnToGoogleHome(true);
       }
     }
 
     function chromeNavForward() {
-      const iframe = document.getElementById("chromeWebIframe");
-      try {
-        if (iframe && iframe.contentWindow) iframe.contentWindow.history.forward();
-      } catch (err) {}
+      if (chromeHistoryIndex < chromeHistory.length - 1) {
+        chromeHistoryIndex += 1;
+        openChromeUrl(chromeHistory[chromeHistoryIndex], true);
+      }
     }
 
     function chromeNavReload() {
-      const iframe = document.getElementById("chromeWebIframe");
-      if (iframe && iframe.style.display !== "none" && iframe.src && iframe.src !== "about:blank") {
-        iframe.src = iframe.src;
+      if (chromeCurrentUrl && chromeCurrentUrl !== "https://www.google.com") {
+        openChromeUrl(chromeCurrentUrl, true);
       } else {
-        returnToGoogleHome();
+        returnToGoogleHome(true);
       }
     }
 
@@ -8039,7 +8577,7 @@
       {
         id: "pdf",
         name: "PDF Viewer",
-        iconHtml: `<img src="https://camo.githubusercontent.com/b7f0c2ba76d02fc3ac287d683de3aad85cc0d6d7335e08779ee73b736354efb8/68747470733a2f2f7777772e656d6265647064662e636f6d2f6c6f676f2d3139322e706e67" alt="PDF Viewer" style="width: 20px; height: 20px; object-fit: contain;">`,
+        iconHtml: `<img src="https://upload.wikimedia.org/wikipedia/commons/6/60/Adobe_Acrobat_Reader_icon_%282020%29.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" alt="PDF Viewer" style="width: 20px; height: 20px; object-fit: contain;">`,
         launch: () => launchPdfViewerApp()
       },
       {
@@ -8254,7 +8792,8 @@
       const btn = document.getElementById("win10SearchBtn");
       const isOpen = flyout && flyout.classList.contains("active");
 
-      // Close Start Menu & Tray Flyouts
+      // Close Task View, Start Menu & Tray Flyouts
+      if (typeof closeTaskView === "function") closeTaskView();
       const startMenu = document.getElementById("win10StartMenu");
       const startBtn = document.getElementById("win10StartBtn");
       if (startMenu) startMenu.classList.remove("active");
@@ -8445,6 +8984,7 @@
         closePowerMenu();
         closeStartAlphaJumpGrid();
       } else {
+        if (typeof closeTaskView === "function") closeTaskView();
         closeAllSystemFlyouts();
         closeWin10SearchFlyout();
         renderWin10StartMenuApps();
@@ -8563,6 +9103,7 @@
       closeWinverWindow();
       closeFileExplorerWindow();
       closeCmdWindow();
+      if (typeof closeTaskView === 'function') closeTaskView();
       multiInstances.forEach(inst => {
         if (!inst.isMinimized) minimizeMultiInstance(inst.id);
       });
@@ -9273,8 +9814,13 @@ ${injectedHtml}`;
       }
 
       // Automatically enforce current system volume whenever new <audio>, <video>, or <iframe> elements load or play
+      let mediaObsTimer = null;
       const mediaObserver = new MutationObserver(() => {
-        applyRealSystemVolume(systemVolume, isSystemMuted);
+        if (mediaObsTimer) return;
+        mediaObsTimer = setTimeout(() => {
+          mediaObsTimer = null;
+          applyRealSystemVolume(systemVolume, isSystemMuted);
+        }, 250);
       });
       mediaObserver.observe(document.body, { childList: true, subtree: true });
 
@@ -11271,6 +11817,7 @@ ${injectedHtml}`;
 
         case "exit": {
           closeCmdWindow();
+      if (typeof closeTaskView === 'function') closeTaskView();
           break;
         }
 
@@ -11280,6 +11827,351 @@ ${injectedHtml}`;
           break;
         }
       }
+    }
+
+    
+    /* -------------------------------------------------------------
+       WINDOWS 10 VIRTUAL DESKTOPS & TASK VIEW CONTROLLER
+       ------------------------------------------------------------- */
+    let virtualDesktops = [{ id: 1, name: "Desktop 1" }];
+    let activeVirtualDesktopId = 1;
+    let nextVirtualDesktopId = 2;
+    let isTaskViewOpen = false;
+    const windowDesktopMap = new Map();
+
+    function getAllManagedWindowDescriptors() {
+      const list = [];
+      const addStatic = (winId, tbId, title, icon, isOpen, isMin, focusFn, closeFn, bg) => {
+        const el = document.getElementById(winId);
+        if (!el) return;
+        list.push({ winId, el, tbId, title, icon, isOpen, isMin, focusFn, closeFn, bg: bg || "#161b26" });
+      };
+
+      addStatic(
+        "appWindow", "taskbarSteamApp", "WebSteam",
+        "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/1280px-Steam_icon_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail&_=20220611141426",
+        !isClosed, isMinimized,
+        () => { if (isMinimized) restoreWindow(); else bringToFront(winEl); },
+        closeWindow, "#10151f"
+      );
+
+      addStatic(
+        "win10GameWindow", "taskbarGameApp",
+        (activeRunningGame && activeRunningGame.title) ? activeRunningGame.title : "Game",
+        (activeRunningGame && activeRunningGame.cover) ? activeRunningGame.cover : DEFAULT_COVER,
+        isGameRunning, isGameMinimized,
+        () => { if (isGameMinimized) restoreGameWindow(); else bringToFront(gameWinEl); },
+        closeGameWindow, "#0b0f16"
+      );
+
+      addStatic(
+        "win10GeogebraWindow", "taskbarGeogebraApp", "GeoGebra",
+        "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Geogebra.svg/60px-Geogebra.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail&_=20210413113417",
+        isGeoRunning, isGeoMinimized,
+        () => { if (isGeoMinimized) restoreGeogebraWindow(); else bringToFront(geoWinEl); },
+        closeGeogebraWindow, "#ffffff"
+      );
+
+      addStatic(
+        "win10VfcWindow", "taskbarVfcApp", "VFC Web Player", VFC_ICON,
+        isVfcRunning, isVfcMinimized,
+        () => { if (isVfcMinimized) restoreVfcWindow(); else bringToFront(vfcWinEl); },
+        closeVfcWindow, "#181818"
+      );
+
+      addStatic(
+        "win10MusicWindow", "taskbarMusicApp", "Music Player", MUSIC_ICON,
+        isMusicRunning, isMusicMinimized,
+        () => { if (isMusicMinimized) restoreMusicWindow(); else bringToFront(musicWinEl); },
+        closeMusicWindow, "#121824"
+      );
+
+      addStatic(
+        "win10SettingsWindow", "taskbarSettingsApp", "Settings",
+        "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ac/Windows_Settings_icon.svg/1280px-Windows_Settings_icon.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail&_=20230417025502",
+        isSettingsRunning, isSettingsMinimized,
+        () => { if (isSettingsMinimized) restoreSettingsWindow(); else bringToFront(settingsWinEl); },
+        closeSettingsWindow, "#f3f3f3"
+      );
+
+      addStatic(
+        "win10CameraWindow", "taskbarCameraApp", "Camera",
+        "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'><rect x='4' y='13' width='40' height='26' rx='5' fill='%230284c7'/><circle cx='24' cy='26' r='8' fill='%230f172a'/></svg>",
+        isCameraRunning, isCameraMinimized,
+        () => { if (isCameraMinimized) restoreCameraWindow(); else bringToFront(cameraWinEl); },
+        closeCameraWindow, "#000000"
+      );
+
+      addStatic(
+        "win10NotepadWindow", "taskbarNotepadApp",
+        document.getElementById("notepadWindowTitle")?.textContent || "Untitled - Notepad",
+        "https://upload.wikimedia.org/wikipedia/commons/c/c9/Windows_Notepad_icon.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+        isNotepadRunning, isNotepadMinimized,
+        () => { if (isNotepadMinimized) restoreNotepadWindow(); else bringToFront(notepadWinEl); },
+        closeNotepadWindow, "#ffffff"
+      );
+
+      addStatic(
+        "win10FileExplorerWindow", "taskbarFileExplorerApp", "File Explorer",
+        "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/Windows_10_File_Explorer_icon.png/1280px-Windows_10_File_Explorer_icon.png?utm_source=commons.wikimedia.org&utm_campaign=gallery&utm_content=thumbnail",
+        isFileExplorerRunning, isFileExplorerMinimized,
+        () => { if (isFileExplorerMinimized) restoreFileExplorerWindow(); else bringToFront(fileExplorerWinEl); },
+        closeFileExplorerWindow, "#000000"
+      );
+
+      addStatic(
+        "win10CmdWindow", "taskbarCmdApp",
+        document.getElementById("cmdWindowTitle")?.textContent || "Command Prompt",
+        "https://upload.wikimedia.org/wikipedia/commons/5/51/Windows_Terminal_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+        isCmdRunning, isCmdMinimized,
+        () => { if (isCmdMinimized) restoreCmdWindow(); else bringToFront(cmdWinEl); },
+        closeCmdWindow, "#000000"
+      );
+
+      addStatic(
+        "win10ChromeWindow", "taskbarChromeApp",
+        document.getElementById("chromeActiveTabTitle")?.textContent || "Google Chrome",
+        "https://img.utdstc.com/icon/4e7/aaf/4e7aafb59a83b9d8d461b7843563f97d79974a3f04e0870b0f396e01b230c319:200",
+        isChromeRunning, isChromeMinimized,
+        () => { if (isChromeMinimized) restoreChromeWindow(); else bringToFront(chromeWinEl); },
+        closeChromeWindow, "#ffffff"
+      );
+
+      addStatic(
+        "win10WinverWindow", "taskbarWinverApp", "About Windows",
+        "https://upload.wikimedia.org/wikipedia/commons/d/d7/Windows_11_executable.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+        isWinverRunning, false,
+        () => bringToFront(winverWinEl),
+        closeWinverWindow, "#ffffff"
+      );
+
+      multiInstances.forEach(inst => {
+        list.push({
+          winId: inst.winEl.id,
+          el: inst.winEl,
+          tbId: inst.taskbarBtn ? inst.taskbarBtn.id : null,
+          title: inst.title,
+          icon: inst.icon,
+          isOpen: true,
+          isMin: inst.isMinimized,
+          focusFn: () => { if (inst.isMinimized) restoreMultiInstance(inst.id); else bringToFront(inst.winEl); },
+          closeFn: () => closeMultiInstance(inst.id),
+          bg: "#ffffff"
+        });
+      });
+
+      return list;
+    }
+
+    function applyVirtualDesktopVisibility() {
+      const descriptors = getAllManagedWindowDescriptors();
+      descriptors.forEach(desc => {
+        if (!desc.isOpen) {
+          windowDesktopMap.delete(desc.winId);
+          desc.el.classList.remove("vd-hidden");
+          if (desc.tbId) {
+            const tb = document.getElementById(desc.tbId);
+            if (tb) tb.classList.remove("vd-taskbar-hidden");
+          }
+          return;
+        }
+        if (!windowDesktopMap.has(desc.winId)) {
+          windowDesktopMap.set(desc.winId, activeVirtualDesktopId);
+        }
+        const ownerDesktopId = windowDesktopMap.get(desc.winId);
+        const onCurrent = ownerDesktopId === activeVirtualDesktopId;
+        desc.el.classList.toggle("vd-hidden", !onCurrent);
+        if (desc.tbId) {
+          const tb = document.getElementById(desc.tbId);
+          if (tb) tb.classList.toggle("vd-taskbar-hidden", !onCurrent);
+        }
+      });
+    }
+
+    function switchVirtualDesktop(desktopId, closeViewAfter = false) {
+      if (!virtualDesktops.some(d => d.id === desktopId)) return;
+      activeVirtualDesktopId = desktopId;
+      applyVirtualDesktopVisibility();
+      if (closeViewAfter) {
+        closeTaskView();
+      } else if (isTaskViewOpen) {
+        renderTaskView();
+      }
+    }
+
+    function createVirtualDesktop(stayInTaskView = true) {
+      const newId = nextVirtualDesktopId++;
+      virtualDesktops.push({ id: newId, name: `Desktop ${virtualDesktops.length + 1}` });
+      if (stayInTaskView && isTaskViewOpen) {
+        renderTaskView();
+      } else {
+        switchVirtualDesktop(newId, false);
+      }
+    }
+
+    function closeVirtualDesktop(desktopId, e) {
+      if (e) e.stopPropagation();
+      if (virtualDesktops.length <= 1) return;
+      const idx = virtualDesktops.findIndex(d => d.id === desktopId);
+      if (idx === -1) return;
+
+      const fallbackDesktop = virtualDesktops[idx > 0 ? idx - 1 : 1];
+      windowDesktopMap.forEach((dId, wId) => {
+        if (dId === desktopId) windowDesktopMap.set(wId, fallbackDesktop.id);
+      });
+
+      virtualDesktops.splice(idx, 1);
+      virtualDesktops.forEach((d, i) => { d.name = `Desktop ${i + 1}`; });
+
+      if (activeVirtualDesktopId === desktopId) {
+        activeVirtualDesktopId = fallbackDesktop.id;
+      }
+      applyVirtualDesktopVisibility();
+      if (isTaskViewOpen) renderTaskView();
+    }
+
+    function moveWindowToDesktop(winId, targetDesktopId) {
+      if (!virtualDesktops.some(d => d.id === targetDesktopId)) return;
+      windowDesktopMap.set(winId, targetDesktopId);
+      applyVirtualDesktopVisibility();
+      if (isTaskViewOpen) renderTaskView();
+    }
+
+    function toggleTaskView(e) {
+      if (e) e.stopPropagation();
+      closeAllSystemFlyouts();
+      const menu = document.getElementById("win10StartMenu");
+      const startBtn = document.getElementById("win10StartBtn");
+      if (menu) menu.classList.remove("active");
+      if (startBtn) startBtn.classList.remove("active");
+
+      if (isTaskViewOpen) closeTaskView();
+      else openTaskView();
+    }
+
+    function openTaskView() {
+      applyVirtualDesktopVisibility();
+      isTaskViewOpen = true;
+      const overlay = document.getElementById("win10TaskViewOverlay");
+      const btn = document.getElementById("win10TaskViewBtn");
+      if (overlay) overlay.classList.add("active");
+      if (btn) btn.classList.add("active");
+      renderTaskView();
+    }
+
+    function closeTaskView() {
+      isTaskViewOpen = false;
+      const overlay = document.getElementById("win10TaskViewOverlay");
+      const btn = document.getElementById("win10TaskViewBtn");
+      if (overlay) overlay.classList.remove("active");
+      if (btn) btn.classList.remove("active");
+    }
+
+    function renderTaskView() {
+      const stage = document.getElementById("tvWindowsStage");
+      const desktopsList = document.getElementById("tvDesktopsList");
+      if (!stage || !desktopsList) return;
+
+      const allDescs = getAllManagedWindowDescriptors().filter(d => d.isOpen);
+      const activeDescs = allDescs.filter(d => (windowDesktopMap.get(d.winId) || activeVirtualDesktopId) === activeVirtualDesktopId);
+
+      // 1. Render open windows on active desktop
+      stage.innerHTML = "";
+      if (activeDescs.length === 0) {
+        stage.innerHTML = `<div class="tv-empty-desktop-msg">No open windows on ${escapeHtml(virtualDesktops.find(d => d.id === activeVirtualDesktopId)?.name || "this desktop")}.</div>`;
+      } else {
+        activeDescs.forEach(desc => {
+          const card = document.createElement("div");
+          card.className = "tv-win-card";
+          card.draggable = true;
+          card.ondragstart = (ev) => {
+            ev.dataTransfer.setData("text/plain", desc.winId);
+          };
+
+          card.innerHTML = `
+            <div class="tv-win-card-header">
+              <div class="tv-win-card-id">
+                <img class="tv-win-card-icon" src="${desc.icon}" alt="">
+                <span class="tv-win-card-title">${escapeHtml(desc.title)}</span>
+              </div>
+              <button type="button" class="tv-win-card-close" title="Close">&times;</button>
+            </div>
+            <div class="tv-win-preview">
+              <div class="tv-win-preview-bar">
+                <span>${escapeHtml(desc.title)}</span>
+                <span>&#9744; &times;</span>
+              </div>
+              <div class="tv-win-preview-body" style="background: ${desc.bg};">
+                <img src="${desc.icon}" alt="">
+                <span class="tv-win-preview-label" style="color: ${desc.bg === '#ffffff' || desc.bg === '#f3f3f3' ? '#222222' : '#e2e8f0'};">${escapeHtml(desc.title)}${desc.isMin ? ' (Minimized)' : ''}</span>
+              </div>
+            </div>
+          `;
+
+          card.onclick = (ev) => {
+            if (ev.target.closest(".tv-win-card-close")) return;
+            closeTaskView();
+            desc.focusFn();
+          };
+          card.querySelector(".tv-win-card-close").onclick = (ev) => {
+            ev.stopPropagation();
+            desc.closeFn();
+            applyVirtualDesktopVisibility();
+            renderTaskView();
+          };
+          stage.appendChild(card);
+        });
+      }
+
+      // 2. Render virtual desktop thumbnails bar
+      const currentWallpaper = viewportHost ? viewportHost.style.backgroundImage : "";
+      desktopsList.innerHTML = "";
+      virtualDesktops.forEach(desk => {
+        const dCard = document.createElement("div");
+        dCard.className = "tv-desktop-card" + (desk.id === activeVirtualDesktopId ? " active" : "");
+
+        const deskWins = allDescs.filter(d => (windowDesktopMap.get(d.winId) || 1) === desk.id);
+        let miniHtml = "";
+        deskWins.slice(0, 6).forEach((dw, idx) => {
+          const wLeft = 10 + (idx % 3) * 38;
+          const wTop = 10 + Math.floor(idx / 3) * 32;
+          miniHtml += `<div class="tv-mini-win" style="left:${wLeft}px;top:${wTop}px;width:58px;height:36px;background:${dw.bg};"></div>`;
+        });
+
+        dCard.innerHTML = `
+          <div class="tv-desktop-card-top">
+            <span>${escapeHtml(desk.name)}</span>
+            ${virtualDesktops.length > 1 ? `<button type="button" class="tv-desktop-close" title="Close desktop">&times;</button>` : ""}
+          </div>
+          <div class="tv-desktop-thumb" style="background-image: ${currentWallpaper || 'linear-gradient(135deg,#0f172a,#1e293b)'};">
+            ${miniHtml}
+          </div>
+        `;
+
+        dCard.onclick = (ev) => {
+          if (ev.target.closest(".tv-desktop-close")) return;
+          switchVirtualDesktop(desk.id, true);
+        };
+
+        const closeBtn = dCard.querySelector(".tv-desktop-close");
+        if (closeBtn) {
+          closeBtn.onclick = (ev) => closeVirtualDesktop(desk.id, ev);
+        }
+
+        dCard.ondragover = (ev) => {
+          ev.preventDefault();
+          dCard.classList.add("drag-over");
+        };
+        dCard.ondragleave = () => dCard.classList.remove("drag-over");
+        dCard.ondrop = (ev) => {
+          ev.preventDefault();
+          dCard.classList.remove("drag-over");
+          const winId = ev.dataTransfer.getData("text/plain");
+          if (winId) moveWindowToDesktop(winId, desk.id);
+        };
+
+        desktopsList.appendChild(dCard);
+      });
     }
 
     function initAllWindowDragAndResize() {
