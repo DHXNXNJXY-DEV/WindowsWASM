@@ -6585,13 +6585,48 @@
       });
     }
 
+    let fullViewportW = 0;
+    let fullViewportH = 0;
+
     function adjustResponsiveViewport() {
       const vv = window.visualViewport;
       const sw = Math.max(1, (vv && vv.width) || document.documentElement.clientWidth || window.innerWidth);
       const sh = Math.max(1, (vv && vv.height) || document.documentElement.clientHeight || window.innerHeight);
-      const scale = Math.min(sw / 1366, sh / 768);
+
+      const isSameWidth = fullViewportW > 0 && Math.abs(sw - fullViewportW) < 60;
+      const isKeyboardOpen = isSameWidth && fullViewportH > 0 && sh < fullViewportH * 0.78;
+
+      if (!isKeyboardOpen) {
+        fullViewportW = sw;
+        fullViewportH = sh;
+      }
+
+      const targetW = fullViewportW || sw;
+      const targetH = fullViewportH || sh;
+      const scale = Math.min(targetW / 1366, targetH / 768);
+
+      let panY = 0;
+      if (isKeyboardOpen && viewportHost) {
+        const activeEl = document.activeElement;
+        const isHostInput = activeEl && (activeEl.tagName === "INPUT" || activeEl.tagName === "TEXTAREA");
+        if (isHostInput) {
+          const hostRect = viewportHost.getBoundingClientRect();
+          const elRect = activeEl.getBoundingClientRect();
+          const elOffsetCenter = (elRect.top - hostRect.top) + (elRect.height / 2);
+          const unpannedHostTop = (targetH - (768 * scale)) / 2;
+          const desiredCenter = sh * 0.45;
+          const currentCenter = unpannedHostTop + elOffsetCenter;
+          panY = Math.min(0, desiredCenter - currentCenter);
+          const maxUpPan = -(768 * scale - sh + unpannedHostTop);
+          panY = Math.max(maxUpPan, panY);
+        } else {
+          // Focus is inside an iframe or generic element: shift up gently without shrinking
+          panY = -Math.max(0, (targetH - sh) * 0.35);
+        }
+      }
+
       if (viewportHost) {
-        viewportHost.style.transform = `translate3d(-50%, -50%, 0) scale(${scale})`;
+        viewportHost.style.transform = `translate3d(-50%, calc(-50% + ${panY}px), 0) scale(${scale})`;
       }
     }
 
