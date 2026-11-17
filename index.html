@@ -211,6 +211,234 @@
       letter-spacing: 0.3px;
     }
 
+    /* First-Time OOBE Customize Settings Screen */
+    .win10-oobe-screen {
+      position: absolute;
+      inset: 0;
+      background: #0067b8;
+      z-index: 100004;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 96px 110px 44px 110px;
+      color: #ffffff;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .oobe-main {
+      max-width: 620px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .oobe-title {
+      font-size: 42px;
+      font-weight: 300;
+      letter-spacing: 0.2px;
+      margin-bottom: 18px;
+      line-height: 1.15;
+    }
+
+    .oobe-subtitle {
+      font-size: 14.5px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.94);
+      margin-bottom: 30px;
+      line-height: 1.45;
+    }
+
+    .oobe-form-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 540px;
+    }
+
+    .oobe-form-row {
+      display: flex;
+      align-items: center;
+    }
+
+    .oobe-label {
+      width: 180px;
+      flex-shrink: 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .oobe-input {
+      flex: 1;
+      height: 34px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 2px solid rgba(255, 255, 255, 0.45);
+      padding: 0 10px;
+      font-size: 14px;
+      color: #000000;
+      outline: none;
+      font-family: inherit;
+      user-select: text;
+      -webkit-user-select: text;
+      transition: background 0.12s ease, border-color 0.12s ease;
+    }
+
+    .oobe-input:focus {
+      background: #ffffff;
+      border-color: #ffffff;
+    }
+
+    .oobe-error-msg {
+      display: none;
+      margin-left: 180px;
+      margin-top: 2px;
+      font-size: 13px;
+      color: #ffd1d1;
+    }
+
+    .oobe-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .oobe-ease-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.88);
+      cursor: pointer;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.15s ease, transform 0.12s ease;
+    }
+
+    .oobe-ease-btn:hover {
+      color: #ffffff;
+      transform: scale(1.06);
+    }
+
+    .oobe-finish-btn {
+      min-width: 120px;
+      height: 34px;
+      background: #0078d7;
+      border: 1px solid rgba(255, 255, 255, 0.48);
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 400;
+      font-family: inherit;
+      cursor: pointer;
+      outline: none;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .oobe-finish-btn:hover {
+      background: #1084e0;
+      border-color: #ffffff;
+    }
+
+    .oobe-finish-btn:active {
+      background: #005a9e;
+    }
+
+    @keyframes oobeScreenFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes oobeSlideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(48px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes oobeSlideOutLeft {
+      from {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateX(-44px);
+      }
+    }
+
+    @keyframes oobeFooterFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes blueLoaderContentIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95) translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .win10-oobe-screen.oobe-enter {
+      opacity: 1;
+    }
+
+    .win10-oobe-screen.oobe-enter .oobe-title {
+      opacity: 0;
+      animation: oobeSlideInRight 0.42s cubic-bezier(0.1, 0.9, 0.2, 1) 0.06s forwards;
+    }
+
+    .win10-oobe-screen.oobe-enter .oobe-subtitle {
+      opacity: 0;
+      animation: oobeSlideInRight 0.42s cubic-bezier(0.1, 0.9, 0.2, 1) 0.14s forwards;
+    }
+
+    .win10-oobe-screen.oobe-enter .oobe-form-row:nth-child(1) {
+      opacity: 0;
+      animation: oobeSlideInRight 0.42s cubic-bezier(0.1, 0.9, 0.2, 1) 0.22s forwards;
+    }
+
+    .win10-oobe-screen.oobe-enter .oobe-form-row:nth-child(2) {
+      opacity: 0;
+      animation: oobeSlideInRight 0.42s cubic-bezier(0.1, 0.9, 0.2, 1) 0.29s forwards;
+    }
+
+    .win10-oobe-screen.oobe-enter .oobe-form-row:nth-child(3) {
+      opacity: 0;
+      animation: oobeSlideInRight 0.42s cubic-bezier(0.1, 0.9, 0.2, 1) 0.36s forwards;
+    }
+
+    .win10-oobe-screen.oobe-enter .oobe-footer {
+      opacity: 0;
+      animation: oobeFooterFadeUp 0.38s cubic-bezier(0.1, 0.9, 0.2, 1) 0.32s forwards;
+    }
+
+    .win10-oobe-screen.oobe-exit .oobe-main,
+    .win10-oobe-screen.oobe-exit .oobe-footer {
+      animation: oobeSlideOutLeft 0.28s cubic-bezier(0.4, 0, 1, 1) forwards;
+    }
+
+    .oobe-form-rows.shake-error {
+      animation: winInputShake 0.4s ease-in-out;
+    }
+
+    .win10-blue-loader.loader-enter .blue-loader-spinner,
+    .win10-blue-loader.loader-enter .blue-loader-title {
+      animation: blueLoaderContentIn 0.35s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+    }
+
     /* Login Screen */
     .win10-login-screen {
       position: absolute;
@@ -4598,6 +4826,39 @@
       <div class="blue-loader-title" id="blueLoaderText">Just a moment...</div>
     </div>
 
+    <!-- 0.2 FIRST-TIME OOBE CUSTOMIZE SETTINGS SCREEN -->
+    <div class="win10-oobe-screen" id="win10OobeScreen">
+      <div class="oobe-main">
+        <h1 class="oobe-title">Customize settings</h1>
+        <p class="oobe-subtitle">Type a username and password for your account that you can use to sign in to this computer.</p>
+
+        <div class="oobe-form-rows">
+          <div class="oobe-form-row">
+            <label class="oobe-label" for="oobeUsernameInput">User name</label>
+            <input type="text" class="oobe-input" id="oobeUsernameInput" value="User" placeholder="User" autocomplete="off">
+          </div>
+          <div class="oobe-form-row">
+            <label class="oobe-label" for="oobePasswordInput">Password</label>
+            <input type="password" class="oobe-input" id="oobePasswordInput" autocomplete="new-password">
+          </div>
+          <div class="oobe-form-row">
+            <label class="oobe-label" for="oobeReenterPasswordInput">Reenter password</label>
+            <input type="password" class="oobe-input" id="oobeReenterPasswordInput" autocomplete="new-password">
+          </div>
+          <div class="oobe-error-msg" id="oobeErrorMsg">The passwords you typed do not match. Try again.</div>
+        </div>
+      </div>
+
+      <div class="oobe-footer">
+        <button type="button" class="oobe-ease-btn" title="Ease of Access">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="currentColor">
+            <path d="M16 4C14.355469 4 13 5.355469 13 7C13 8.644531 14.355469 10 16 10C17.644531 10 19 8.644531 19 7C19 5.355469 17.644531 4 16 4 Z M 16 6C16.5625 6 17 6.4375 17 7C17 7.5625 16.5625 8 16 8C15.4375 8 15 7.5625 15 7C15 6.4375 15.4375 6 16 6 Z M 6 11L6 13L13 13L13 18.8125L10.09375 27.6875L12 28.3125L14.71875 20L17.28125 20L20 28.3125L21.90625 27.6875L19 18.8125L19 13L26 13L26 11 Z M 15 13L17 13L17 18L15 18Z"/>
+          </svg>
+        </button>
+        <button type="button" class="oobe-finish-btn" id="oobeFinishBtn" onclick="submitOobeSetup()">Finish</button>
+      </div>
+    </div>
+
     <!-- 1. AUTHENTIC WINDOWS 10 LOGIN SCREEN -->
     <div class="win10-login-screen" id="win10LoginScreen">
       <div class="login-container">
@@ -6153,6 +6414,7 @@
   <script>
     const KEY_GAMES = "websteam_games_v2";
     const KEY_SETTINGS = "websteam_settings_v2";
+    const KEY_OOBE_DONE = "win10_oobe_completed_v1";
 
     const DEFAULT_COVER = "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300&q=75";
     const DEFAULT_BANNER = "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1200&q=75";
@@ -6334,11 +6596,134 @@
     /* -------------------------------------------------------------
        BOOT SEQUENCE: LOGO (1.8s) -> BLACK (1.5s) -> BLUE (1.2s) -> LOGIN
        ------------------------------------------------------------- */
+    function isOobeCompleted() {
+      try {
+        return localStorage.getItem(KEY_OOBE_DONE) === "true";
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function showFirstTimeOobe() {
+      const oobeScreen = document.getElementById("win10OobeScreen");
+      const userInp = document.getElementById("oobeUsernameInput");
+      const pwdInp = document.getElementById("oobePasswordInput");
+      const rePwdInp = document.getElementById("oobeReenterPasswordInput");
+      const errMsg = document.getElementById("oobeErrorMsg");
+      const formRows = oobeScreen ? oobeScreen.querySelector(".oobe-form-rows") : null;
+
+      if (userInp) userInp.value = clientSettings.userName || "User";
+      if (pwdInp) pwdInp.value = "";
+      if (rePwdInp) rePwdInp.value = "";
+      if (errMsg) errMsg.style.display = "none";
+      if (formRows) formRows.classList.remove("shake-error");
+
+      if (oobeScreen) {
+        oobeScreen.classList.remove("oobe-exit", "oobe-enter");
+        oobeScreen.style.display = "flex";
+        void oobeScreen.offsetWidth;
+        oobeScreen.classList.add("oobe-enter");
+      }
+      if (pwdInp) {
+        setTimeout(() => pwdInp.focus(), 380);
+      }
+    }
+
+    function submitOobeSetup() {
+      const oobeScreen = document.getElementById("win10OobeScreen");
+      const blueLoader = document.getElementById("win10BlueLoader");
+      const blueText = document.getElementById("blueLoaderText");
+      const bootScreen = document.getElementById("win10BootScreen");
+      const bootContent = document.getElementById("win10BootContent");
+      const loginScreen = document.getElementById("win10LoginScreen");
+
+      const userInp = document.getElementById("oobeUsernameInput");
+      const pwdInp = document.getElementById("oobePasswordInput");
+      const rePwdInp = document.getElementById("oobeReenterPasswordInput");
+      const errMsg = document.getElementById("oobeErrorMsg");
+      const formRows = oobeScreen ? oobeScreen.querySelector(".oobe-form-rows") : null;
+
+      const newUser = (userInp ? userInp.value.trim() : "") || "User";
+      const newPwd = pwdInp ? pwdInp.value : "";
+      const confirmPwd = rePwdInp ? rePwdInp.value : "";
+
+      if (newPwd !== confirmPwd) {
+        if (errMsg) errMsg.style.display = "block";
+        if (formRows) {
+          formRows.classList.remove("shake-error");
+          void formRows.offsetWidth;
+          formRows.classList.add("shake-error");
+        }
+        if (rePwdInp) {
+          rePwdInp.focus();
+          rePwdInp.select();
+        }
+        return;
+      }
+
+      if (errMsg) errMsg.style.display = "none";
+
+      clientSettings.userName = newUser;
+      clientSettings.password = newPwd.trim();
+      saveSettingsToStorage();
+      applySettings();
+      updateLoginPromptUI();
+
+      try {
+        localStorage.setItem(KEY_OOBE_DONE, "true");
+      } catch (e) {}
+
+      if (oobeScreen) {
+        oobeScreen.classList.remove("oobe-enter");
+        oobeScreen.classList.add("oobe-exit");
+      }
+
+      setTimeout(() => {
+        // Show "Finalizing your settings" blue loader BEFORE hiding OOBE so #0067b8 stays solid
+        if (blueText) blueText.textContent = "Finalizing your settings";
+        if (blueLoader) {
+          blueLoader.classList.remove("loader-enter");
+          blueLoader.style.display = "flex";
+          void blueLoader.offsetWidth;
+          blueLoader.classList.add("loader-enter");
+        }
+
+        if (oobeScreen) {
+          oobeScreen.style.display = "none";
+          oobeScreen.classList.remove("oobe-exit");
+        }
+
+        setTimeout(() => {
+          // Show 2s dark screen BEFORE hiding blue loader
+          if (bootContent) bootContent.style.display = "none";
+          if (bootScreen) {
+            bootScreen.style.display = "flex";
+            bootScreen.style.opacity = "1";
+          }
+          if (blueLoader) {
+            blueLoader.style.display = "none";
+            blueLoader.classList.remove("loader-enter");
+          }
+
+          setTimeout(() => {
+            if (loginScreen) loginScreen.style.display = "flex";
+            if (bootScreen) bootScreen.style.display = "none";
+
+            const loginPwdInput = document.getElementById("loginPasswordInput");
+            if (loginPwdInput && clientSettings.password) {
+              loginPwdInput.focus();
+            }
+          }, 2000);
+        }, 1800);
+      }, 280);
+    }
+
     function runCompleteBootSequence() {
       const bootScreen = document.getElementById("win10BootScreen");
       const bootContent = document.getElementById("win10BootContent");
       const blueLoader = document.getElementById("win10BlueLoader");
       const blueText = document.getElementById("blueLoaderText");
+      const oobeScreen = document.getElementById("win10OobeScreen");
       const loginScreen = document.getElementById("win10LoginScreen");
 
       if (!bootScreen) return;
@@ -6347,6 +6732,7 @@
       bootScreen.style.opacity = "1";
       if (bootContent) bootContent.style.display = "flex";
       if (blueLoader) blueLoader.style.display = "none";
+      if (oobeScreen) oobeScreen.style.display = "none";
       if (loginScreen) loginScreen.style.display = "none";
 
       updateLoginPromptUI();
@@ -6363,14 +6749,16 @@
           bootScreen.style.display = "none";
 
           setTimeout(() => {
-            // Stage 4: Cut directly to login screen
-            if (blueLoader) blueLoader.style.display = "none";
-            if (loginScreen) loginScreen.style.display = "flex";
-
-            const pwdInput = document.getElementById("loginPasswordInput");
-            if (pwdInput && clientSettings.password) {
-              pwdInput.focus();
+            if (!isOobeCompleted()) {
+              showFirstTimeOobe();
+            } else {
+              if (loginScreen) loginScreen.style.display = "flex";
+              const pwdInput = document.getElementById("loginPasswordInput");
+              if (pwdInput && clientSettings.password) {
+                pwdInput.focus();
+              }
             }
+            if (blueLoader) blueLoader.style.display = "none";
           }, 1200);
 
         }, 1500);
@@ -12319,6 +12707,25 @@ ${injectedHtml}`;
       if (pwdInput) {
         pwdInput.addEventListener("keydown", (e) => {
           if (e.key === "Enter") submitWin10Login();
+        });
+      }
+
+      const oobeUserInp = document.getElementById("oobeUsernameInput");
+      const oobePwdInp = document.getElementById("oobePasswordInput");
+      const oobeRePwdInp = document.getElementById("oobeReenterPasswordInput");
+      if (oobeUserInp) {
+        oobeUserInp.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" && oobePwdInp) oobePwdInp.focus();
+        });
+      }
+      if (oobePwdInp) {
+        oobePwdInp.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" && oobeRePwdInp) oobeRePwdInp.focus();
+        });
+      }
+      if (oobeRePwdInp) {
+        oobeRePwdInp.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") submitOobeSetup();
         });
       }
 
