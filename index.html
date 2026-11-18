@@ -957,6 +957,44 @@
       pointer-events: none !important;
     }
 
+    @keyframes win10WindowOpen {
+      from {
+        opacity: 0;
+        transform: scale(0.92);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes win10WindowClose {
+      from {
+        opacity: 1;
+        transform: scale(1);
+      }
+      to {
+        opacity: 0;
+        transform: scale(0.93);
+      }
+    }
+
+    .desktop-app-window {
+      transition: transform 0.2s cubic-bezier(0.1, 0.9, 0.2, 1), opacity 0.16s ease;
+    }
+
+    .desktop-app-window.active:not(.minimized):not(.win-closing),
+    .win10-winver-window.active:not(.win-closing),
+    .desktop-app-window.win-opening {
+      animation: win10WindowOpen 0.18s cubic-bezier(0.1, 0.9, 0.2, 1);
+    }
+
+    .desktop-app-window.win-closing,
+    .win10-winver-window.win-closing {
+      animation: win10WindowClose 0.14s cubic-bezier(0.4, 0, 1, 1) forwards !important;
+      pointer-events: none !important;
+    }
+
     .resize-handle {
       position: absolute;
       z-index: 100;
@@ -1855,6 +1893,7 @@
     }
 
     .chrome-star-btn:hover { color: #fbbc05; }
+
 
     .chrome-content-viewport {
       flex: 1;
@@ -4029,6 +4068,104 @@
       cursor: default;
     }
 
+    /* Desktop Icons Layer */
+    .desktop-icons-layer {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      bottom: 46px;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      gap: 4px;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .desktop-icon-tile {
+      width: 74px;
+      padding: 4px 4px 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      background: transparent;
+      pointer-events: auto;
+      user-select: none;
+      transition: background 0.1s, border-color 0.1s;
+    }
+
+    .desktop-icon-tile:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .desktop-icon-tile.selected {
+      background: rgba(0, 120, 215, 0.36);
+      border-color: rgba(110, 190, 255, 0.78);
+    }
+
+    .desktop-icon-img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.55));
+      pointer-events: none;
+    }
+
+    .desktop-icon-label {
+      font-size: 12px;
+      color: #ffffff;
+      text-align: center;
+      line-height: 1.25;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95), 0 0 6px rgba(0, 0, 0, 0.75);
+      word-break: break-word;
+      pointer-events: none;
+    }
+
+    .fe-recycle-bar {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      background: #111111;
+      border-bottom: 1px solid #262626;
+      flex-wrap: wrap;
+    }
+
+    .fe-recycle-bar.active {
+      display: flex;
+    }
+
+    .fe-recycle-btn {
+      background: #232323;
+      border: 1px solid #3c3c3c;
+      color: #ffffff;
+      font-size: 12px;
+      font-family: inherit;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: background 0.12s, border-color 0.12s;
+    }
+
+    .fe-recycle-btn:hover:not(:disabled) {
+      background: #0078d7;
+      border-color: #0078d7;
+    }
+
+    .fe-recycle-btn.danger:hover:not(:disabled) {
+      background: #c42b1c;
+      border-color: #c42b1c;
+    }
+
+    .fe-recycle-btn:disabled {
+      opacity: 0.45;
+      cursor: default;
+    }
+
     .fe-search-bar-row {
       display: none;
       align-items: center;
@@ -4924,6 +5061,14 @@
         <div class="win10-msg-footer">
           <button class="win10-msg-ok-btn" id="win10MsgOkBtn" onclick="closeMsgDialog()">OK</button>
         </div>
+      </div>
+    </div>
+
+    <!-- DESKTOP ICONS LAYER -->
+    <div class="desktop-icons-layer" id="desktopIconsLayer">
+      <div class="desktop-icon-tile" id="desktopRecycleBinIcon" onclick="selectDesktopIcon(event, this)" ondblclick="openDesktopRecycleBin()" title="Recycle Bin">
+        <img class="desktop-icon-img" src="https://static.wikia.nocookie.net/logopedia/images/7/70/Recycle_Bin_Windows_10_empty.PNG/revision/latest/scale-to-width-down/250?cb=20211011004601" alt="Recycle Bin">
+        <span class="desktop-icon-label">Recycle Bin</span>
       </div>
     </div>
 
@@ -5954,6 +6099,12 @@
               </span>
               <span class="fe-nav-label">Pictures</span>
             </button>
+            <button type="button" class="fe-nav-item" id="feNavRecycleBin" onclick="navigateFileExplorer('Recycle Bin')">
+              <span class="fe-nav-icon">
+                <img src="https://static.wikia.nocookie.net/logopedia/images/7/70/Recycle_Bin_Windows_10_empty.PNG/revision/latest/scale-to-width-down/250?cb=20211011004601" alt="Recycle Bin" style="width:18px;height:18px;object-fit:contain;">
+              </span>
+              <span class="fe-nav-label">Recycle Bin</span>
+            </button>
           </nav>
         </aside>
 
@@ -5965,6 +6116,13 @@
                 <path d="M12 19V5M5 12l7-7 7 7"/>
               </svg>
             </button>
+          </div>
+
+          <div class="fe-recycle-bar" id="feRecycleBar">
+            <button type="button" class="fe-recycle-btn" id="feRestoreSelectedBtn" onclick="feActionRestoreSelected()">Restore selected</button>
+            <button type="button" class="fe-recycle-btn" id="feRestoreAllBtn" onclick="feActionRestoreAll()">Restore all</button>
+            <button type="button" class="fe-recycle-btn danger" id="fePermDeleteBtn" onclick="feActionDeleteSelected()">Delete permanently</button>
+            <button type="button" class="fe-recycle-btn danger" id="feEmptyRecycleBtn" onclick="feActionEmptyRecycleBin()">Empty Recycle Bin</button>
           </div>
 
           <div class="fe-search-bar-row" id="feSearchBarRow">
@@ -6019,11 +6177,13 @@
             </div>
 
             <div class="fe-more-menu" id="feMoreMenu" onclick="event.stopPropagation()">
-              <button type="button" class="fe-menu-btn" onclick="feActionCreateTextFile()">New Text File</button>
-              <button type="button" class="fe-menu-btn" onclick="triggerFileExplorerUpload()">Upload File from PC</button>
+              <button type="button" class="fe-menu-btn" id="feMenuNewTextBtn" onclick="feActionCreateTextFile()">New Text File</button>
+              <button type="button" class="fe-menu-btn" id="feMenuUploadBtn" onclick="triggerFileExplorerUpload()">Upload File from PC</button>
               <button type="button" class="fe-menu-btn" id="feMenuOpenBtn" onclick="feActionOpenSelected()">Open</button>
               <button type="button" class="fe-menu-btn" id="feMenuDownloadBtn" onclick="feActionDownloadSelected()">Download</button>
               <button type="button" class="fe-menu-btn" id="feMenuRenameBtn" onclick="feActionRenameSelected()">Rename</button>
+              <button type="button" class="fe-menu-btn" id="feMenuRestoreBtn" style="display:none;" onclick="feActionRestoreSelected()">Restore</button>
+              <button type="button" class="fe-menu-btn" id="feMenuEmptyRecycleBtn" style="display:none;" onclick="feActionEmptyRecycleBin()">Empty Recycle Bin</button>
               <button type="button" class="fe-menu-btn" id="feMenuDeleteBtn" onclick="feActionDeleteSelected()">Delete</button>
             </div>
           </div>
@@ -6136,6 +6296,7 @@
           </div>
           <input type="text" class="chrome-omnibox-input" id="chromeOmniboxInput" value="https://www.google.com" spellcheck="false" autocomplete="off" onkeydown="handleChromeOmniboxKey(event)">
         </div>
+
       </div>
 
       <div class="chrome-content-viewport">
@@ -6559,6 +6720,26 @@
       restoreWindow();
     }
 
+    function animateWindowClose(el, onDone) {
+      if (!el) {
+        if (onDone) onDone();
+        return;
+      }
+      const isVisible = el.classList.contains("active") || el.style.display === "flex";
+      if (!isVisible || document.body.classList.contains("animations-disabled") || el.classList.contains("minimized")) {
+        el.classList.remove("win-closing", "win-opening");
+        if (onDone) onDone();
+        return;
+      }
+      if (el.classList.contains("win-closing")) return;
+      el.classList.remove("win-opening");
+      el.classList.add("win-closing");
+      setTimeout(() => {
+        el.classList.remove("win-closing");
+        if (onDone) onDone();
+      }, 145);
+    }
+
     function bringToFront(el) {
       if (!el) return;
       if (el.id && !windowDesktopMap.has(el.id)) {
@@ -6583,6 +6764,38 @@
       iframes.forEach(f => {
         f.style.pointerEvents = enabled ? "auto" : "none";
       });
+    }
+
+    function isAnyMenuOrFlyoutOpen() {
+      const ids = [
+        "win10StartMenu",
+        "win10SearchFlyout",
+        "win10PowerMenu",
+        "win10CalendarFlyout",
+        "win10NetworkFlyout",
+        "win10SoundFlyout"
+      ];
+      return ids.some(id => {
+        const el = document.getElementById(id);
+        return el && el.classList.contains("active");
+      });
+    }
+
+    function syncFlyoutIframePointerEvents() {
+      setIframesPointerEvents(!isAnyMenuOrFlyoutOpen());
+    }
+
+    function closeAllMenusAndFlyouts() {
+      const startMenu = document.getElementById("win10StartMenu");
+      const startBtn = document.getElementById("win10StartBtn");
+      if (startMenu) startMenu.classList.remove("active");
+      if (startBtn) startBtn.classList.remove("active");
+      if (typeof collapseStartRail === "function") collapseStartRail();
+      if (typeof closePowerMenu === "function") closePowerMenu();
+      if (typeof closeStartAlphaJumpGrid === "function") closeStartAlphaJumpGrid();
+      if (typeof closeWin10SearchFlyout === "function") closeWin10SearchFlyout();
+      if (typeof closeAllSystemFlyouts === "function") closeAllSystemFlyouts();
+      syncFlyoutIframePointerEvents();
     }
 
     let fullViewportW = 0;
@@ -7043,15 +7256,16 @@
     }
 
     function closeGeogebraWindow() {
-      const iframe = document.getElementById("geogebraFrame");
-      if (iframe) iframe.src = "about:blank";
-      geoWinEl.classList.remove("active", "minimized", "maximized");
       isGeoRunning = false;
       isGeoMinimized = false;
       isGeoMaximized = false;
-
       const taskbarBtn = document.getElementById("taskbarGeogebraApp");
       if (taskbarBtn) taskbarBtn.style.display = "none";
+      animateWindowClose(geoWinEl, () => {
+        const iframe = document.getElementById("geogebraFrame");
+        if (iframe) iframe.src = "about:blank";
+        geoWinEl.classList.remove("active", "minimized", "maximized");
+      });
     }
 
     function minimizeGeogebraWindow() {
@@ -7140,19 +7354,20 @@
     }
 
     function closeVfcWindow() {
-      const iframe = document.getElementById("vfcFrame");
-      if (iframe) {
-        delete iframe.dataset.loadedVfc;
-        iframe.removeAttribute("srcdoc");
-        iframe.src = "about:blank";
-      }
-      vfcWinEl.classList.remove("active", "minimized", "maximized");
       isVfcRunning = false;
       isVfcMinimized = false;
       isVfcMaximized = false;
-
       const taskbarBtn = document.getElementById("taskbarVfcApp");
       if (taskbarBtn) taskbarBtn.style.display = "none";
+      animateWindowClose(vfcWinEl, () => {
+        const iframe = document.getElementById("vfcFrame");
+        if (iframe) {
+          delete iframe.dataset.loadedVfc;
+          iframe.removeAttribute("srcdoc");
+          iframe.src = "about:blank";
+        }
+        vfcWinEl.classList.remove("active", "minimized", "maximized");
+      });
     }
 
     function minimizeVfcWindow() {
@@ -7241,19 +7456,20 @@
     }
 
     function closeMusicWindow() {
-      const iframe = document.getElementById("musicFrame");
-      if (iframe) {
-        delete iframe.dataset.loadedMusic;
-        iframe.removeAttribute("srcdoc");
-        iframe.src = "about:blank";
-      }
-      musicWinEl.classList.remove("active", "minimized", "maximized");
       isMusicRunning = false;
       isMusicMinimized = false;
       isMusicMaximized = false;
-
       const taskbarBtn = document.getElementById("taskbarMusicApp");
       if (taskbarBtn) taskbarBtn.style.display = "none";
+      animateWindowClose(musicWinEl, () => {
+        const iframe = document.getElementById("musicFrame");
+        if (iframe) {
+          delete iframe.dataset.loadedMusic;
+          iframe.removeAttribute("srcdoc");
+          iframe.src = "about:blank";
+        }
+        musicWinEl.classList.remove("active", "minimized", "maximized");
+      });
     }
 
     function minimizeMusicWindow() {
@@ -7343,13 +7559,14 @@
     }
 
     function closeSettingsWindow() {
-      settingsWinEl.classList.remove("active", "minimized", "maximized");
       isSettingsRunning = false;
       isSettingsMinimized = false;
       isSettingsMaximized = false;
-
       const taskbarBtn = document.getElementById("taskbarSettingsApp");
       if (taskbarBtn) taskbarBtn.style.display = "none";
+      animateWindowClose(settingsWinEl, () => {
+        settingsWinEl.classList.remove("active", "minimized", "maximized");
+      });
     }
 
     function minimizeSettingsWindow() {
@@ -7578,13 +7795,14 @@
 
     function closeCameraWindow() {
       stopWin10CameraStream();
-      cameraWinEl.classList.remove("active", "minimized", "maximized");
       isCameraRunning = false;
       isCameraMinimized = false;
       isCameraMaximized = false;
-
       const taskbarBtn = document.getElementById("taskbarCameraApp");
       if (taskbarBtn) taskbarBtn.style.display = "none";
+      animateWindowClose(cameraWinEl, () => {
+        cameraWinEl.classList.remove("active", "minimized", "maximized");
+      });
     }
 
     function minimizeCameraWindow() {
@@ -7674,13 +7892,14 @@
 
     function closeNotepadWindow() {
       closeAllNotepadMenus();
-      notepadWinEl.classList.remove("active", "minimized", "maximized");
       isNotepadRunning = false;
       isNotepadMinimized = false;
       isNotepadMaximized = false;
-
       const taskbarBtn = document.getElementById("taskbarNotepadApp");
       if (taskbarBtn) taskbarBtn.style.display = "none";
+      animateWindowClose(notepadWinEl, () => {
+        notepadWinEl.classList.remove("active", "minimized", "maximized");
+      });
     }
 
     function minimizeNotepadWindow() {
@@ -8034,11 +8253,12 @@
     }
 
     function closeWinverWindow() {
-      winverWinEl.classList.remove("active");
       isWinverRunning = false;
-
       const taskbarBtn = document.getElementById("taskbarWinverApp");
       if (taskbarBtn) taskbarBtn.style.display = "none";
+      animateWindowClose(winverWinEl, () => {
+        winverWinEl.classList.remove("active");
+      });
     }
 
     function toggleTaskbarWinverApp() {
@@ -8327,18 +8547,19 @@
     function closeMultiInstance(instId) {
       const inst = multiInstances.get(instId);
       if (!inst) return;
+      multiInstances.delete(instId);
 
-      const iframe = document.getElementById(`iframe_${instId}`);
-      if (iframe) iframe.src = "about:blank";
-
-      if (inst.winEl && inst.winEl.parentNode) {
-        inst.winEl.parentNode.removeChild(inst.winEl);
-      }
       if (inst.taskbarBtn && inst.taskbarBtn.parentNode) {
         inst.taskbarBtn.parentNode.removeChild(inst.taskbarBtn);
       }
 
-      multiInstances.delete(instId);
+      animateWindowClose(inst.winEl, () => {
+        const iframe = document.getElementById(`iframe_${instId}`);
+        if (iframe) iframe.src = "about:blank";
+        if (inst.winEl && inst.winEl.parentNode) {
+          inst.winEl.parentNode.removeChild(inst.winEl);
+        }
+      });
     }
 
     function closeAllMultiInstances() {
@@ -8403,19 +8624,20 @@
     }
 
     function closeGameWindow() {
-      const iframe = document.getElementById("standaloneGameFrame");
-      if (iframe) {
-        iframe.removeAttribute("srcdoc");
-        iframe.src = "about:blank";
-      }
-      gameWinEl.classList.remove("active", "minimized", "maximized");
       isGameRunning = false;
       isGameMinimized = false;
       isGameMaximized = false;
-
       const taskbarBtn = document.getElementById("taskbarGameApp");
       if (taskbarBtn) taskbarBtn.style.display = "none";
       activeRunningGame = null;
+      animateWindowClose(gameWinEl, () => {
+        const iframe = document.getElementById("standaloneGameFrame");
+        if (iframe) {
+          iframe.removeAttribute("srcdoc");
+          iframe.src = "about:blank";
+        }
+        gameWinEl.classList.remove("active", "minimized", "maximized");
+      });
     }
 
     function minimizeGameWindow() {
@@ -8498,16 +8720,16 @@
     }
 
     function closeChromeWindow() {
-      chromeWinEl.classList.remove("active", "minimized", "maximized");
       isChromeRunning = false;
       isChromeMinimized = false;
       isChromeMaximized = false;
-
-      const iframe = document.getElementById("chromeWebIframe");
-      if (iframe) iframe.src = "about:blank";
-
       const taskbarChrome = document.getElementById("taskbarChromeApp");
       if (taskbarChrome) taskbarChrome.style.display = "none";
+      animateWindowClose(chromeWinEl, () => {
+        chromeWinEl.classList.remove("active", "minimized", "maximized");
+        const iframe = document.getElementById("chromeWebIframe");
+        if (iframe) iframe.src = "about:blank";
+      });
     }
 
     function minimizeChromeWindow() {
@@ -8880,9 +9102,16 @@
     }
 
     function restoreWindow() {
+      const wasClosed = isClosed;
       isClosed = false;
       isMinimized = false;
-      winEl.classList.remove("minimized");
+      winEl.classList.remove("minimized", "win-closing");
+      if (wasClosed) {
+        winEl.classList.remove("win-opening");
+        void winEl.offsetWidth;
+        winEl.classList.add("win-opening");
+        setTimeout(() => winEl.classList.remove("win-opening"), 200);
+      }
       winEl.style.display = "flex";
       winEl.style.opacity = "1";
       bringToFront(winEl);
@@ -8893,8 +9122,10 @@
       if (isClosed) return;
       isClosed = true;
       isMinimized = false;
-      winEl.style.display = "none";
       updateTaskbarIndicator();
+      animateWindowClose(winEl, () => {
+        winEl.style.display = "none";
+      });
     }
 
     function toggleTaskbarSteamApp() {
@@ -9240,6 +9471,7 @@
           setTimeout(() => input.focus(), 20);
         }
       }
+      syncFlyoutIframePointerEvents();
     }
 
     function closeWin10SearchFlyout() {
@@ -9247,6 +9479,7 @@
       const btn = document.getElementById("win10SearchBtn");
       if (flyout) flyout.classList.remove("active");
       if (btn) btn.classList.remove("active");
+      syncFlyoutIframePointerEvents();
     }
 
     function triggerSearchAnything(queryText) {
@@ -9418,6 +9651,7 @@
         const appListEl = document.getElementById("win10StartAppList");
         if (appListEl) appListEl.scrollTop = 0;
       }
+      syncFlyoutIframePointerEvents();
     }
 
     function toggleStartRailExpansion(event) {
@@ -9513,6 +9747,17 @@
           btn.classList.remove("active");
           collapseStartRail();
           closePowerMenu();
+          syncFlyoutIframePointerEvents();
+        }
+      }, true);
+
+      window.addEventListener("blur", () => {
+        if (isAnyMenuOrFlyoutOpen()) {
+          setTimeout(() => {
+            if (document.activeElement && document.activeElement.tagName === "IFRAME") {
+              closeAllMenusAndFlyouts();
+            }
+          }, 0);
         }
       });
     }
@@ -9608,6 +9853,7 @@
       if (clockBtn) clockBtn.classList.remove("active");
       if (netBtn) netBtn.classList.remove("active");
       if (volBtn) volBtn.classList.remove("active");
+      syncFlyoutIframePointerEvents();
     }
 
     function toggleCalendarFlyout(e) {
@@ -9626,6 +9872,7 @@
         cal.classList.add("active");
         if (btn) btn.classList.add("active");
       }
+      syncFlyoutIframePointerEvents();
     }
 
     function toggleNetworkFlyout(e, isLoginScreen = false) {
@@ -9649,6 +9896,7 @@
         }
         net.classList.add("active");
       }
+      syncFlyoutIframePointerEvents();
     }
 
     function toggleSoundFlyout(e) {
@@ -9667,6 +9915,7 @@
         snd.classList.add("active");
         if (btn) btn.classList.add("active");
       }
+      syncFlyoutIframePointerEvents();
     }
 
     function getVolumeSvgPath(vol, muted) {
@@ -10286,7 +10535,7 @@ ${injectedHtml}`;
         if (!clickedInsideFlyout && !clickedTrigger) {
           closeAllSystemFlyouts();
         }
-      });
+      }, true);
     }
 
     /* -------------------------------------------------------------
@@ -10906,6 +11155,7 @@ ${injectedHtml}`;
        ------------------------------------------------------------- */
     const KEY_FILE_EXPLORER = "win10_file_explorer_v1";
     const FE_FOLDER_ICON = "https://upload.wikimedia.org/wikipedia/commons/9/98/Windows_11_FOLDER.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail_unscaled&_=20241227210805";
+    const FE_RECYCLE_BIN_ICON = "https://static.wikia.nocookie.net/logopedia/images/7/70/Recycle_Bin_Windows_10_empty.PNG/revision/latest/scale-to-width-down/250?cb=20211011004601";
     const FE_ALLOWED_FOLDERS = ["Documents", "Downloads", "Pictures"];
 
     let fileExplorerWinEl = null;
@@ -10918,7 +11168,24 @@ ${injectedHtml}`;
     let feViewMode = "grid";
     let feMultiSelectMode = false;
     let feSelectedIds = new Set();
-    let feStore = { Documents: [], Downloads: [], Pictures: [] };
+    let feStore = { Documents: [], Downloads: [], Pictures: [], RecycleBin: [] };
+
+    function selectDesktopIcon(e, el) {
+      if (e) e.stopPropagation();
+      document.querySelectorAll(".desktop-icon-tile.selected").forEach(t => t.classList.remove("selected"));
+      if (el) el.classList.add("selected");
+    }
+
+    function openDesktopRecycleBin() {
+      launchFileExplorerApp();
+      navigateFileExplorer("Recycle Bin");
+    }
+
+    document.addEventListener("pointerdown", (e) => {
+      if (!e.target.closest(".desktop-icon-tile")) {
+        document.querySelectorAll(".desktop-icon-tile.selected").forEach(t => t.classList.remove("selected"));
+      }
+    });
 
     function loadFileExplorerStorage() {
       try {
@@ -10928,14 +11195,15 @@ ${injectedHtml}`;
           feStore = {
             Documents: Array.isArray(parsed.Documents) ? parsed.Documents : [],
             Downloads: Array.isArray(parsed.Downloads) ? parsed.Downloads : [],
-            Pictures: Array.isArray(parsed.Pictures) ? parsed.Pictures : []
+            Pictures: Array.isArray(parsed.Pictures) ? parsed.Pictures : [],
+            RecycleBin: Array.isArray(parsed.RecycleBin) ? parsed.RecycleBin : []
           };
         } else {
-          feStore = { Documents: [], Downloads: [], Pictures: [] };
+          feStore = { Documents: [], Downloads: [], Pictures: [], RecycleBin: [] };
           saveFileExplorerStorage();
         }
       } catch (e) {
-        feStore = { Documents: [], Downloads: [], Pictures: [] };
+        feStore = { Documents: [], Downloads: [], Pictures: [], RecycleBin: [] };
       }
     }
 
@@ -10994,12 +11262,14 @@ ${injectedHtml}`;
       fileExplorerWinEl = document.getElementById("win10FileExplorerWindow");
       closeFileExplorerMoreMenu();
       closeFileExplorerPreview();
-      if (fileExplorerWinEl) fileExplorerWinEl.classList.remove("active", "minimized", "maximized");
       isFileExplorerRunning = false;
       isFileExplorerMinimized = false;
       isFileExplorerMaximized = false;
       const taskbarBtn = document.getElementById("taskbarFileExplorerApp");
       if (taskbarBtn) taskbarBtn.style.display = "none";
+      animateWindowClose(fileExplorerWinEl, () => {
+        if (fileExplorerWinEl) fileExplorerWinEl.classList.remove("active", "minimized", "maximized");
+      });
     }
 
     function minimizeFileExplorerWindow() {
@@ -11118,15 +11388,34 @@ ${injectedHtml}`;
       const menu = document.getElementById("feMoreMenu");
       if (!menu) return;
       const isFolder = FE_ALLOWED_FOLDERS.includes(feCurrentLocation);
+      const isRecycle = feCurrentLocation === "Recycle Bin";
       const hasSel = feSelectedIds.size > 0;
+      const newTextBtn = document.getElementById("feMenuNewTextBtn");
+      const uploadBtn = document.getElementById("feMenuUploadBtn");
       const openBtn = document.getElementById("feMenuOpenBtn");
       const dlBtn = document.getElementById("feMenuDownloadBtn");
       const renBtn = document.getElementById("feMenuRenameBtn");
+      const restoreBtn = document.getElementById("feMenuRestoreBtn");
+      const emptyBtn = document.getElementById("feMenuEmptyRecycleBtn");
       const delBtn = document.getElementById("feMenuDeleteBtn");
-      if (openBtn) openBtn.disabled = !hasSel;
+
+      if (newTextBtn) newTextBtn.style.display = isRecycle ? "none" : "flex";
+      if (uploadBtn) uploadBtn.style.display = isRecycle ? "none" : "flex";
+      if (openBtn) openBtn.disabled = !hasSel || isRecycle;
       if (dlBtn) dlBtn.disabled = !(isFolder && hasSel);
       if (renBtn) renBtn.disabled = !(isFolder && feSelectedIds.size === 1);
-      if (delBtn) delBtn.disabled = !(isFolder && hasSel);
+      if (restoreBtn) {
+        restoreBtn.style.display = isRecycle ? "flex" : "none";
+        restoreBtn.disabled = !hasSel;
+      }
+      if (emptyBtn) {
+        emptyBtn.style.display = isRecycle ? "flex" : "none";
+        emptyBtn.disabled = (feStore.RecycleBin || []).length === 0;
+      }
+      if (delBtn) {
+        delBtn.textContent = isRecycle ? "Delete permanently" : "Delete";
+        delBtn.disabled = !((isFolder || isRecycle) && hasSel);
+      }
       menu.classList.toggle("active");
     }
 
@@ -11144,10 +11433,28 @@ ${injectedHtml}`;
       if (!grid) return;
 
       // Update sidebar active state
-      ["This PC", ...FE_ALLOWED_FOLDERS].forEach(loc => {
+      ["This PC", ...FE_ALLOWED_FOLDERS, "Recycle Bin"].forEach(loc => {
         const navEl = document.getElementById("feNav" + loc.replace(/\s+/g, ""));
         if (navEl) navEl.classList.toggle("active", feCurrentLocation === loc);
       });
+
+      const recycleBar = document.getElementById("feRecycleBar");
+      const isRecycleView = feCurrentLocation === "Recycle Bin";
+      if (recycleBar) {
+        recycleBar.classList.toggle("active", isRecycleView);
+        if (isRecycleView) {
+          const rCount = (feStore.RecycleBin || []).length;
+          const hasSel = feSelectedIds.size > 0;
+          const rSelBtn = document.getElementById("feRestoreSelectedBtn");
+          const rAllBtn = document.getElementById("feRestoreAllBtn");
+          const pDelBtn = document.getElementById("fePermDeleteBtn");
+          const emptyBtn = document.getElementById("feEmptyRecycleBtn");
+          if (rSelBtn) rSelBtn.disabled = !hasSel;
+          if (rAllBtn) rAllBtn.disabled = rCount === 0;
+          if (pDelBtn) pDelBtn.disabled = !hasSel;
+          if (emptyBtn) emptyBtn.disabled = rCount === 0;
+        }
+      }
 
       if (upBtn) upBtn.disabled = feCurrentLocation === "This PC";
 
@@ -11163,15 +11470,18 @@ ${injectedHtml}`;
       grid.innerHTML = "";
 
       if (feCurrentLocation === "This PC") {
-        const folders = FE_ALLOWED_FOLDERS.filter(name => !searchVal || name.toLowerCase().includes(searchVal));
+        const thisPcTargets = [...FE_ALLOWED_FOLDERS, "Recycle Bin"];
+        const folders = thisPcTargets.filter(name => !searchVal || name.toLowerCase().includes(searchVal));
         folders.forEach(folderName => {
-          const files = feStore[folderName] || [];
+          const storeKey = folderName === "Recycle Bin" ? "RecycleBin" : folderName;
+          const files = feStore[storeKey] || [];
           const latestDate = files.length > 0 ? files[files.length - 1].date : new Date().toLocaleDateString();
+          const iconSrc = folderName === "Recycle Bin" ? FE_RECYCLE_BIN_ICON : FE_FOLDER_ICON;
           const item = document.createElement("div");
           item.className = "fe-item" + (feSelectedIds.has(folderName) ? " selected" : "");
           item.innerHTML = `
             <input type="checkbox" class="fe-item-checkbox" ${feSelectedIds.has(folderName) ? "checked" : ""}>
-            <img class="fe-item-icon" src="${FE_FOLDER_ICON}" alt="${folderName}">
+            <img class="fe-item-icon" src="${iconSrc}" alt="${folderName}">
             <div class="fe-item-meta">
               <span class="fe-item-name">${folderName}</span>
               <span class="fe-item-sub">${latestDate} &bull; ${files.length} item${files.length === 1 ? "" : "s"}</span>
@@ -11194,9 +11504,15 @@ ${injectedHtml}`;
         return;
       }
 
-      const files = (feStore[feCurrentLocation] || []).filter(f => !searchVal || (f.name || "").toLowerCase().includes(searchVal));
+      const storeKey = isRecycleView ? "RecycleBin" : feCurrentLocation;
+      const files = (feStore[storeKey] || []).filter(f => !searchVal || (f.name || "").toLowerCase().includes(searchVal));
       if (files.length === 0) {
-        grid.innerHTML = `
+        grid.innerHTML = isRecycleView ? `
+          <div class="fe-empty-folder" style="grid-column: 1 / -1;">
+            <span>Recycle Bin is empty.</span>
+            <span style="font-size: 11.5px; color: #666666;">Deleted files from Documents, Downloads, and Pictures appear here.</span>
+          </div>
+        ` : `
           <div class="fe-empty-folder" style="grid-column: 1 / -1;">
             <span>This folder is empty.</span>
             <span style="font-size: 11.5px; color: #666666;">Drop files here or click the + icon below to save files to ${feCurrentLocation}.</span>
@@ -11206,12 +11522,15 @@ ${injectedHtml}`;
         files.forEach(file => {
           const item = document.createElement("div");
           item.className = "fe-item" + (feSelectedIds.has(file.id) ? " selected" : "");
+          const subLine = isRecycleView
+            ? `From ${escapeHtml(file.originalFolder || "Documents")} &bull; ${escapeHtml(file.deletedDate || file.date || "")} &bull; ${formatFeSize(file.size)}`
+            : `${escapeHtml(file.date || "")} &bull; ${formatFeSize(file.size)}`;
           item.innerHTML = `
             <input type="checkbox" class="fe-item-checkbox" ${feSelectedIds.has(file.id) ? "checked" : ""}>
             ${getFeFileIconSvg(file)}
             <div class="fe-item-meta">
               <span class="fe-item-name" title="${escapeHtml(file.name)}">${escapeHtml(file.name)}</span>
-              <span class="fe-item-sub">${escapeHtml(file.date || "")} &bull; ${formatFeSize(file.size)}</span>
+              <span class="fe-item-sub">${subLine}</span>
             </div>
           `;
           item.onclick = (e) => {
@@ -11223,7 +11542,14 @@ ${injectedHtml}`;
             }
             renderFileExplorerContent();
           };
-          item.ondblclick = () => openFeFile(file);
+          item.ondblclick = () => {
+            if (isRecycleView) {
+              feSelectedIds = new Set([file.id]);
+              feActionRestoreSelected();
+            } else {
+              openFeFile(file);
+            }
+          };
           grid.appendChild(item);
         });
       }
@@ -11386,7 +11712,7 @@ ${injectedHtml}`;
       if (feSelectedIds.size === 0) return;
       const firstId = Array.from(feSelectedIds)[0];
       if (feCurrentLocation === "This PC") {
-        if (FE_ALLOWED_FOLDERS.includes(firstId)) navigateFileExplorer(firstId);
+        if (FE_ALLOWED_FOLDERS.includes(firstId) || firstId === "Recycle Bin") navigateFileExplorer(firstId);
         return;
       }
       const file = (feStore[feCurrentLocation] || []).find(f => f.id === firstId);
@@ -11416,8 +11742,74 @@ ${injectedHtml}`;
 
     function feActionDeleteSelected() {
       closeFileExplorerMoreMenu();
-      if (!FE_ALLOWED_FOLDERS.includes(feCurrentLocation) || feSelectedIds.size === 0) return;
-      feStore[feCurrentLocation] = (feStore[feCurrentLocation] || []).filter(f => !feSelectedIds.has(f.id));
+      if (feSelectedIds.size === 0) return;
+      if (feCurrentLocation === "Recycle Bin") {
+        // Permanent delete from Recycle Bin
+        feStore.RecycleBin = (feStore.RecycleBin || []).filter(f => !feSelectedIds.has(f.id));
+        feSelectedIds.clear();
+        saveFileExplorerStorage();
+        renderFileExplorerContent();
+        return;
+      }
+      if (!FE_ALLOWED_FOLDERS.includes(feCurrentLocation)) return;
+      const remaining = [];
+      (feStore[feCurrentLocation] || []).forEach(f => {
+        if (feSelectedIds.has(f.id)) {
+          feStore.RecycleBin.push(Object.assign({}, f, {
+            originalFolder: feCurrentLocation,
+            deletedDate: new Date().toLocaleDateString()
+          }));
+        } else {
+          remaining.push(f);
+        }
+      });
+      feStore[feCurrentLocation] = remaining;
+      feSelectedIds.clear();
+      saveFileExplorerStorage();
+      renderFileExplorerContent();
+    }
+
+    function feActionRestoreSelected() {
+      closeFileExplorerMoreMenu();
+      if (feCurrentLocation !== "Recycle Bin" || feSelectedIds.size === 0) return;
+      const remaining = [];
+      (feStore.RecycleBin || []).forEach(f => {
+        if (feSelectedIds.has(f.id)) {
+          const targetFolder = FE_ALLOWED_FOLDERS.includes(f.originalFolder) ? f.originalFolder : "Documents";
+          const restored = Object.assign({}, f);
+          delete restored.originalFolder;
+          delete restored.deletedDate;
+          feStore[targetFolder].push(restored);
+        } else {
+          remaining.push(f);
+        }
+      });
+      feStore.RecycleBin = remaining;
+      feSelectedIds.clear();
+      saveFileExplorerStorage();
+      renderFileExplorerContent();
+    }
+
+    function feActionRestoreAll() {
+      closeFileExplorerMoreMenu();
+      if (feCurrentLocation !== "Recycle Bin" || (feStore.RecycleBin || []).length === 0) return;
+      (feStore.RecycleBin || []).forEach(f => {
+        const targetFolder = FE_ALLOWED_FOLDERS.includes(f.originalFolder) ? f.originalFolder : "Documents";
+        const restored = Object.assign({}, f);
+        delete restored.originalFolder;
+        delete restored.deletedDate;
+        feStore[targetFolder].push(restored);
+      });
+      feStore.RecycleBin = [];
+      feSelectedIds.clear();
+      saveFileExplorerStorage();
+      renderFileExplorerContent();
+    }
+
+    function feActionEmptyRecycleBin() {
+      closeFileExplorerMoreMenu();
+      if (feCurrentLocation !== "Recycle Bin" || (feStore.RecycleBin || []).length === 0) return;
+      feStore.RecycleBin = [];
       feSelectedIds.clear();
       saveFileExplorerStorage();
       renderFileExplorerContent();
@@ -11546,12 +11938,14 @@ ${injectedHtml}`;
 
     function closeCmdWindow() {
       cmdWinEl = document.getElementById("win10CmdWindow");
-      if (cmdWinEl) cmdWinEl.classList.remove("active", "minimized", "maximized");
       isCmdRunning = false;
       isCmdMinimized = false;
       isCmdMaximized = false;
       const taskbarBtn = document.getElementById("taskbarCmdApp");
       if (taskbarBtn) taskbarBtn.style.display = "none";
+      animateWindowClose(cmdWinEl, () => {
+        if (cmdWinEl) cmdWinEl.classList.remove("active", "minimized", "maximized");
+      });
     }
 
     function minimizeCmdWindow() {
