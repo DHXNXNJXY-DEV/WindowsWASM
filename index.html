@@ -42,6 +42,19 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
+      -webkit-tap-highlight-color: transparent !important;
+    }
+
+    html, body, button, a, div, span, img, svg, label, [role="button"] {
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
+      -webkit-tap-highlight-color: transparent !important;
+      -webkit-touch-callout: none;
+    }
+
+    :focus:not(input):not(textarea):not(select),
+    :focus-visible:not(input):not(textarea):not(select) {
+      outline: none !important;
     }
 
     html, body {
@@ -689,7 +702,15 @@
       overflow: hidden;
       cursor: pointer;
       user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+      outline: none;
       transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s ease;
+    }
+
+    .win10-lock-screen:focus,
+    .win10-lock-screen:active {
+      outline: none;
     }
 
     .win10-lock-screen.lock-dismissing {
@@ -6768,6 +6789,227 @@
       color: #666666;
       padding-right: 16px;
     }
+
+    /* Dark WinUI Tool Window (App Installer) */
+    .w10-tool-window.w10-dark-tool {
+      background: #1f1f1f;
+      border: 1px solid #333333;
+      color: #ffffff;
+      border-radius: 6px !important;
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.85);
+    }
+
+    .w10-tool-window.w10-dark-tool .w10-tool-titlebar {
+      background: #1f1f1f;
+      border-bottom: none;
+      height: 36px;
+      padding-left: 14px;
+    }
+
+    .w10-tool-window.w10-dark-tool .w10-tool-title {
+      color: #f1f1f1;
+      font-size: 12.5px;
+    }
+
+    .w10-tool-window.w10-dark-tool .w10-tool-cap-btn {
+      color: #e5e5e5;
+      height: 36px;
+      width: 46px;
+    }
+
+    .w10-tool-window.w10-dark-tool .w10-tool-cap-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+    }
+
+    .w10-tool-window.w10-dark-tool .w10-tool-cap-btn.close:hover {
+      background: #e81123 !important;
+      color: #ffffff !important;
+    }
+
+    .w10-tool-window.w10-dark-tool .w10-tool-body {
+      background: #1f1f1f;
+      color: #ffffff;
+    }
+
+    .app-inst-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 18px 28px 22px 28px;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .app-inst-top-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 28px;
+    }
+
+    .app-inst-fields {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .app-inst-name-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 2px 0 8px 0;
+      font-size: 30px;
+      font-weight: 400;
+      color: #ffffff;
+      outline: none;
+      font-family: inherit;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    .app-inst-name-input::placeholder {
+      color: #8c8c8c;
+    }
+
+    .app-inst-url-input {
+      width: 100%;
+      height: 40px;
+      background: #2b2b2b;
+      border: 1px solid #3c3c3c;
+      border-radius: 6px !important;
+      padding: 0 14px;
+      font-size: 15px;
+      color: #ffffff;
+      outline: none;
+      font-family: inherit;
+      user-select: text;
+      -webkit-user-select: text;
+      transition: border-color 0.15s;
+    }
+
+    .app-inst-url-input::placeholder {
+      color: #9e9e9e;
+    }
+
+    .app-inst-url-input:focus {
+      border-color: #4cc2ff;
+    }
+
+    .app-inst-check-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: #f1f1f1;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .app-inst-checkbox {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 4px !important;
+      border: 1.5px solid #8a8a8a;
+      background: transparent;
+      cursor: pointer;
+      position: relative;
+      flex-shrink: 0;
+      transition: background 0.12s, border-color 0.12s;
+    }
+
+    .app-inst-checkbox:checked {
+      background: #4cc2ff;
+      border-color: #4cc2ff;
+    }
+
+    .app-inst-checkbox:checked::after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 1.5px;
+      width: 5px;
+      height: 10px;
+      border: solid #000000;
+      border-width: 0 2px 2px 0;
+      transform: rotate(42deg);
+    }
+
+    .app-inst-icon-picker {
+      width: 106px;
+      height: 106px;
+      border-radius: 8px !important;
+      background: #4cc2ff;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+      transition: filter 0.15s, transform 0.1s;
+    }
+
+    .app-inst-icon-picker:hover {
+      filter: brightness(1.06);
+    }
+
+    .app-inst-icon-picker:active {
+      transform: scale(0.97);
+    }
+
+    .app-inst-capabilities {
+      margin-top: 22px;
+    }
+
+    .app-inst-cap-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .app-inst-cap-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 13.5px;
+      color: #a6a6a6;
+    }
+
+    .app-inst-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 22px;
+    }
+
+    .app-inst-install-btn {
+      background: #4cc2ff;
+      color: #000000;
+      border: none;
+      border-radius: 6px !important;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 8px 36px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .app-inst-install-btn:hover {
+      background: #66ccff;
+    }
+
+    .app-inst-install-btn:active {
+      transform: scale(0.98);
+    }
   </style>
 </head>
 <body>
@@ -12574,7 +12816,15 @@
       return svgBody;
     }
 
+    const APP_INSTALLER_ICON_SVG = `<svg viewBox="0 0 32 32" width="20" height="20"><circle cx="16" cy="9.5" r="5.5" fill="#38bdf8"/><circle cx="16" cy="9.5" r="2" fill="#0369a1"/><rect x="5" y="10" width="22" height="17" rx="2.5" fill="#d97706"/><rect x="5" y="10" width="22" height="5" rx="1.5" fill="#f59e0b"/><path d="M12 10h8v3.5a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V10z" fill="#b45309"/></svg>`;
+
     const WIN10_START_APPS = [
+      {
+        id: "app_installer",
+        name: "App Installer",
+        iconHtml: APP_INSTALLER_ICON_SVG,
+        launch: () => launchWin10ToolApp("app_installer")
+      },
       {
         id: "winver",
         name: "About Windows",
@@ -14550,6 +14800,7 @@ ${injectedHtml}`;
 
       initAllWindowDragAndResize();
       initTaskbarClock();
+      loadInstalledWebApps();
       loadStartAppUsage();
       renderWin10StartMenuApps();
       initStartMenuListeners();
@@ -15106,6 +15357,9 @@ ${injectedHtml}`;
       }
       const name = (file.name || "").toLowerCase();
       if (file.isShortcut || name.endsWith(".url") || name.endsWith(".lnk")) {
+        if (file.customIcon) {
+          return `<img class="fe-item-icon" src="${file.customIcon}" alt="" style="object-fit: contain; border-radius: 4px;">`;
+        }
         return `<svg class="fe-item-icon" viewBox="0 0 36 36" fill="none"><rect x="6" y="4" width="24" height="28" rx="2" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/><path d="M13 21l9-9M15 12h7v7" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
       }
       if (file.type && file.type.startsWith("image/") && file.content) {
@@ -15628,6 +15882,12 @@ ${injectedHtml}`;
         return;
       }
       if (file.isShortcut || (file.name || "").toLowerCase().endsWith(".url")) {
+        if (file.isWebAppShortcut && file.targetUrl) {
+          const appName = (file.name || "Web App").replace(/\.url$/i, "");
+          const appIcon = file.customIcon || getWebAppAutoIconUrl(file.targetUrl);
+          spawnMultiInstance("webapp_" + (file.webAppId || Date.now()), appName, file.targetUrl, appIcon);
+          return;
+        }
         if (file.targetUrl) {
           launchGoogleChrome();
           setTimeout(() => openChromeUrl(file.targetUrl), 60);
@@ -17170,7 +17430,8 @@ ${injectedHtml}`;
       dot: `<svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="3"/></svg>`,
       pin: `<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h4.5M5.5 5v6M5.5 6h5l1.5-1.5v7L10.5 10h-5"/></svg>`,
       unpin: `<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h4.5M5.5 5v6M5.5 6h5l1.5-1.5v7L10.5 10h-5M2 2l12 12"/></svg>`,
-      runAdmin: `<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linejoin="round"><path d="M6 10.5H2V3h9.5v3.5"/><path d="M11.5 6.5L15 8v2.7c0 2.1-1.5 3.6-3.5 4.3-2-.7-3.5-2.2-3.5-4.3V8l3.5-1.5z"/></svg>`
+      runAdmin: `<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linejoin="round"><path d="M6 10.5H2V3h9.5v3.5"/><path d="M11.5 6.5L15 8v2.7c0 2.1-1.5 3.6-3.5 4.3-2-.7-3.5-2.2-3.5-4.3V8l3.5-1.5z"/></svg>`,
+      uninstall: `<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4h11M6 4V2.5h4V4M4.5 4v9.5h7V4M6.5 6.5v4.5M9.5 6.5v4.5"/></svg>`
     };
 
     function closeIntelGfxModal() {
@@ -17197,6 +17458,9 @@ ${injectedHtml}`;
         return `<img class="desktop-icon-img" src="${file.content}" alt="" style="object-fit:cover;border:1px solid rgba(255,255,255,0.25);">`;
       }
       if (file.isShortcut || (file.name || "").toLowerCase().endsWith(".url")) {
+        if (file.customIcon) {
+          return `<img class="desktop-icon-img" src="${file.customIcon}" alt="" style="object-fit:contain;border-radius:8px;">`;
+        }
         return `<svg class="desktop-icon-img" viewBox="0 0 48 48" fill="none"><rect x="8" y="6" width="32" height="36" rx="3" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/><path d="M17 29l14-14M20 15h11v11" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
       }
       if ((file.name || "").toLowerCase().endsWith(".txt") || file.type === "text/plain") {
@@ -18274,7 +18538,7 @@ ${injectedHtml}`;
 
     function buildStartAppContextMenuItems(app) {
       const pinned = isAppPinnedToTaskbar(app.id);
-      return [
+      const items = [
         {
           label: pinned ? "Unpin from taskbar" : "Pin to taskbar",
           icon: pinned ? WIN10_ICONS.unpin : WIN10_ICONS.pin,
@@ -18291,6 +18555,17 @@ ${injectedHtml}`;
           }
         }
       ];
+      if (app && (app.isInstalledWebApp || (app.id && app.id.startsWith("webapp_")))) {
+        items.push({ sep: true });
+        items.push({
+          label: "Uninstall",
+          icon: WIN10_ICONS.uninstall,
+          action: () => {
+            uninstallInstalledWebApp(app.id);
+          }
+        });
+      }
+      return items;
     }
 
     function handleContextMenuTrigger(target, clientX, clientY) {
@@ -20215,6 +20490,7 @@ prg|Old Prussian|Prūsiskan|europe|Historical|0|1|lt`;
     const win10ServicesData = getAdminState().services;
 
     const WIN10_TOOL_DEFS = {
+      app_installer: { title: "App Installer", w: 760, h: 385, bg: "#1f1f1f", darkMode: true, render: renderAppInstallerApp },
       powershell: { title: "Windows PowerShell", w: 780, h: 460, bg: "#012456", render: (body, tw) => renderPowerShellApp(body, tw, false) },
       powershell_x86: { title: "Windows PowerShell (x86)", w: 780, h: 460, bg: "#012456", render: (body, tw) => renderPowerShellApp(body, tw, true) },
       control: { title: "All Control Panel Items", w: 840, h: 540, bg: "#ffffff", render: renderControlPanelApp },
@@ -20247,7 +20523,7 @@ prg|Old Prussian|Prūsiskan|europe|Historical|0|1|lt`;
       const rectStore = { top, left, width: w, height: h };
 
       const winEl = document.createElement("div");
-      winEl.className = "desktop-app-window w10-tool-window active";
+      winEl.className = "desktop-app-window w10-tool-window active" + (def.darkMode ? " w10-dark-tool" : "");
       winEl.id = "toolwin_" + appId;
       winEl.style.top = rectStore.top + "px";
       winEl.style.left = rectStore.left + "px";
@@ -20402,6 +20678,285 @@ prg|Old Prussian|Prūsiskan|europe|Historical|0|1|lt`;
     // -------------------------------------------------------------------------
     // 4. WINDOWS POWERSHELL & POWERSHELL (x86)
     // -------------------------------------------------------------------------
+
+    // -------------------------------------------------------------------------
+    // APP INSTALLER (INSTALL WEB APPS WITH CUSTOM GALLERY ICON)
+    // -------------------------------------------------------------------------
+    const KEY_INSTALLED_WEBAPPS = "win10_installed_webapps_v1";
+    const DEFAULT_WEBAPP_ICON_URI = "data:image/svg+xml;utf8," + encodeURIComponent(
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#4cc2ff"/><rect x="14" y="18" width="36" height="28" rx="4" fill="#ffffff" opacity="0.9"/><circle cx="24" cy="28" r="3" fill="#0284c7"/><path d="M18 42l10-10 8 8 6-5 6 7H18z" fill="#0284c7"/></svg>`
+    );
+
+    function getWebAppAutoIconUrl(rawUrl) {
+      try {
+        const u = new URL(rawUrl);
+        return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(u.hostname)}&sz=128`;
+      } catch (e) {
+        return DEFAULT_WEBAPP_ICON_URI;
+      }
+    }
+
+    function uninstallInstalledWebApp(startAppId) {
+      if (!startAppId) return;
+      const rawId = startAppId.replace(/^webapp_/, "");
+
+      // 1. Remove from installed webapps storage
+      try {
+        const raw = localStorage.getItem(KEY_INSTALLED_WEBAPPS);
+        if (raw) {
+          const list = JSON.parse(raw) || [];
+          const next = list.filter(a => a.id !== rawId && ("webapp_" + a.id) !== startAppId);
+          localStorage.setItem(KEY_INSTALLED_WEBAPPS, JSON.stringify(next));
+        }
+      } catch (e) {}
+
+      // 2. Remove from WIN10_START_APPS
+      const idx = WIN10_START_APPS.findIndex(a => a.id === startAppId);
+      if (idx !== -1) WIN10_START_APPS.splice(idx, 1);
+
+      // 3. Remove from Most Used usage map
+      if (typeof startAppUsageMap === "object" && startAppUsageMap[startAppId]) {
+        delete startAppUsageMap[startAppId];
+        try { localStorage.setItem(KEY_START_USAGE, JSON.stringify(startAppUsageMap)); } catch (e) {}
+      }
+
+      // 4. Unpin from taskbar if pinned
+      if (isAppPinnedToTaskbar(startAppId)) {
+        togglePinAppToTaskbar(startAppId);
+      }
+
+      // 5. Close any open windows of this web app
+      if (typeof multiInstances !== "undefined") {
+        Array.from(multiInstances.values()).forEach(inst => {
+          if (inst.appType === startAppId) closeMultiInstance(inst.id);
+        });
+      }
+
+      // 6. Remove its desktop shortcut if present
+      if (typeof feStore === "object" && Array.isArray(feStore.Desktop)) {
+        const before = feStore.Desktop.length;
+        feStore.Desktop = feStore.Desktop.filter(f => !(f.isWebAppShortcut && f.webAppId === rawId));
+        if (feStore.Desktop.length !== before) {
+          saveFileExplorerStorage();
+          if (isFileExplorerRunning) renderFileExplorerContent();
+        }
+      }
+
+      // 7. Refresh Start Menu & Search Flyout
+      if (typeof renderWin10StartMenuApps === "function") renderWin10StartMenuApps();
+      const searchFlyout = document.getElementById("win10SearchFlyout");
+      if (searchFlyout && searchFlyout.classList.contains("active")) {
+        const inp = document.getElementById("win10AppSearchInput");
+        renderWin10AppSearchResults(inp ? inp.value : "");
+      }
+    }
+
+    function registerInstalledWebAppInStart(appObj) {
+      if (!appObj || !appObj.id) return;
+      const startId = "webapp_" + appObj.id;
+      const existing = WIN10_START_APPS.find(a => a.id === startId);
+      const iconUrl = appObj.icon || getWebAppAutoIconUrl(appObj.url);
+      const entry = {
+        id: startId,
+        name: appObj.name,
+        isInstalledWebApp: true,
+        webAppRawId: appObj.id,
+        iconHtml: `<img src="${iconUrl}" alt="${escapeHtml(appObj.name)}" style="width: 20px; height: 20px; object-fit: contain; border-radius: 4px;" onerror="this.onerror=null;this.src='${DEFAULT_WEBAPP_ICON_URI}';">`,
+        launch: () => spawnMultiInstance(startId, appObj.name, appObj.url, iconUrl)
+      };
+      if (existing) {
+        Object.assign(existing, entry);
+      } else {
+        WIN10_START_APPS.push(entry);
+      }
+    }
+
+    function loadInstalledWebApps() {
+      try {
+        const raw = localStorage.getItem(KEY_INSTALLED_WEBAPPS);
+        if (!raw) return;
+        const list = JSON.parse(raw);
+        if (Array.isArray(list)) {
+          list.forEach(registerInstalledWebAppInStart);
+        }
+      } catch (e) {}
+    }
+
+    function saveInstalledWebApp(appObj) {
+      let list = [];
+      try {
+        const raw = localStorage.getItem(KEY_INSTALLED_WEBAPPS);
+        if (raw) list = JSON.parse(raw) || [];
+      } catch (e) { list = []; }
+      list = list.filter(a => a.id !== appObj.id);
+      list.push(appObj);
+      try { localStorage.setItem(KEY_INSTALLED_WEBAPPS, JSON.stringify(list)); } catch (e) {}
+      registerInstalledWebAppInStart(appObj);
+      if (typeof renderWin10StartMenuApps === "function") renderWin10StartMenuApps();
+    }
+
+    function renderAppInstallerApp(body, tw) {
+      let customIconDataUrl = "";
+
+      const defaultGallerySvg = `
+        <svg viewBox="0 0 64 64" width="60" height="60" style="display:block;">
+          <rect x="8" y="14" width="48" height="36" rx="4" fill="#1e3a8a" opacity="0.22"/>
+          <rect x="8" y="14" width="48" height="36" rx="4" fill="url(#galGrad)" />
+          <defs>
+            <linearGradient id="galGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#38bdf8"/>
+              <stop offset="100%" stop-color="#0284c7"/>
+            </linearGradient>
+          </defs>
+          <circle cx="43" cy="24" r="4.5" fill="#ffffff"/>
+          <path d="M10 46l13-15 11 11 7-7 13 11v4H10v-4z" fill="#1e3a8a"/>
+          <path d="M24 46l11-11 19 15H24v-4z" fill="#1d4ed8"/>
+        </svg>
+        <div style="position:absolute;right:8px;bottom:8px;width:28px;height:28px;border-radius:50%;background:#16a34a;border:2px solid #ffffff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.35);">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <polyline points="1 20 1 14 7 14"></polyline>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+          </svg>
+        </div>
+      `;
+
+      body.innerHTML = `
+        <div class="app-inst-container">
+          <div>
+            <div class="app-inst-top-row">
+              <div class="app-inst-fields">
+                <input type="text" id="appInstName" class="app-inst-name-input" placeholder="App Name" autocomplete="off">
+                <input type="url" id="appInstUrl" class="app-inst-url-input" placeholder="https://www.app.com" autocomplete="off">
+                <label class="app-inst-check-label" style="margin-top: 2px;">
+                  <input type="checkbox" id="appInstAutoIcon" class="app-inst-checkbox" checked>
+                  <span>Icon &bull; Automatic load on app launch.</span>
+                </label>
+              </div>
+              <button type="button" id="appInstGalleryBtn" class="app-inst-icon-picker" title="Choose app icon from gallery">
+                ${defaultGallerySvg}
+              </button>
+              <input type="file" id="appInstIconFile" accept="image/*" style="display:none;">
+            </div>
+
+            <div class="app-inst-capabilities">
+              <div class="app-inst-cap-title">Capabilities</div>
+              <ul class="app-inst-cap-list">
+                <li>&bull; ui.CONNECTION.INTERNET</li>
+                <li>&bull; ui.WINDOW.RESIZABLE</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="app-inst-footer">
+            <label class="app-inst-check-label">
+              <input type="checkbox" id="appInstDesktopShortcut" class="app-inst-checkbox" checked>
+              <span>Create desktop shortcut</span>
+            </label>
+            <button type="button" id="appInstInstallBtn" class="app-inst-install-btn">Install</button>
+          </div>
+        </div>
+      `;
+
+      const nameInp = body.querySelector("#appInstName");
+      const urlInp = body.querySelector("#appInstUrl");
+      const autoIconCb = body.querySelector("#appInstAutoIcon");
+      const galleryBtn = body.querySelector("#appInstGalleryBtn");
+      const fileInp = body.querySelector("#appInstIconFile");
+      const shortcutCb = body.querySelector("#appInstDesktopShortcut");
+      const installBtn = body.querySelector("#appInstInstallBtn");
+
+      galleryBtn.onclick = () => {
+        fileInp.value = "";
+        fileInp.click();
+      };
+
+      fileInp.onchange = (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          customIconDataUrl = ev.target.result || "";
+          if (customIconDataUrl) {
+            galleryBtn.style.background = "#2b2b2b";
+            galleryBtn.innerHTML = `<img src="${customIconDataUrl}" alt="App Icon" style="width:100%;height:100%;object-fit:cover;display:block;">`;
+          }
+        };
+        reader.readAsDataURL(file);
+      };
+
+      function performInstall() {
+        let rawUrl = (urlInp.value || "").trim();
+        if (!rawUrl) {
+          urlInp.style.borderColor = "#f43f5e";
+          urlInp.focus();
+          return;
+        }
+        if (!/^https?:\/\//i.test(rawUrl)) {
+          rawUrl = "https://" + rawUrl;
+        }
+        let parsedHost = "Web App";
+        try {
+          parsedHost = new URL(rawUrl).hostname.replace(/^www\./, "");
+        } catch (err) {
+          urlInp.style.borderColor = "#f43f5e";
+          urlInp.focus();
+          return;
+        }
+
+        const appName = (nameInp.value || "").trim() || parsedHost;
+        const finalIcon = customIconDataUrl
+          ? customIconDataUrl
+          : (autoIconCb.checked ? getWebAppAutoIconUrl(rawUrl) : DEFAULT_WEBAPP_ICON_URI);
+
+        const appId = "wa_" + Date.now();
+        const appObj = {
+          id: appId,
+          name: appName,
+          url: rawUrl,
+          icon: finalIcon,
+          autoLoadIcon: Boolean(autoIconCb.checked)
+        };
+
+        saveInstalledWebApp(appObj);
+
+        if (shortcutCb.checked) {
+          loadFileExplorerStorage();
+          const shortcutEntry = {
+            id: "fe_" + Date.now() + "_" + Math.random().toString(36).slice(2, 7),
+            name: appName,
+            isShortcut: true,
+            isWebAppShortcut: true,
+            webAppId: appId,
+            targetUrl: rawUrl,
+            customIcon: finalIcon,
+            parentId: null,
+            type: "text/url",
+            size: rawUrl.length,
+            date: new Date().toLocaleDateString(),
+            ts: Date.now(),
+            content: `[InternetShortcut]\nURL=${rawUrl}`
+          };
+          feStore.Desktop.push(shortcutEntry);
+          saveFileExplorerStorage();
+          if (isFileExplorerRunning) renderFileExplorerContent();
+        }
+
+        installBtn.textContent = "Installed";
+        installBtn.disabled = true;
+        setTimeout(() => {
+          closeWin10ToolWindow(tw.id);
+          spawnMultiInstance("webapp_" + appId, appName, rawUrl, finalIcon);
+        }, 220);
+      }
+
+      installBtn.onclick = performInstall;
+      urlInp.oninput = () => { urlInp.style.borderColor = ""; };
+      urlInp.onkeydown = (e) => { if (e.key === "Enter") performInstall(); };
+      nameInp.onkeydown = (e) => { if (e.key === "Enter") urlInp.focus(); };
+      setTimeout(() => nameInp.focus(), 40);
+    }
+
     function renderPowerShellApp(body, tw, isX86) {
       let cwd = getCmdUserRoot();
       const history = [];
@@ -20598,6 +21153,8 @@ prg|Old Prussian|Prūsiskan|europe|Historical|0|1|lt`;
         "winver": () => launchWinverWindow(),
         "taskmgr": () => launchWin10ToolApp("taskmgr"),
         "taskmgr.exe": () => launchWin10ToolApp("taskmgr"),
+        "appinstaller": () => launchWin10ToolApp("app_installer"),
+        "app installer": () => launchWin10ToolApp("app_installer"),
         "chrome": () => launchGoogleChrome(),
         "explorer": () => launchFileExplorerApp(),
         "ms-settings:": () => launchSettingsWindow()
